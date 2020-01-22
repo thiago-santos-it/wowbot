@@ -11,7 +11,7 @@ import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.robot.Robot
 
 class Game : ApplicationListener {
-
+    //TODO criar dinâmica de campeonato
     private val robot1 = Robot("Jaum", "Demolidor", 30, 1)
     private val robot2 = Robot("Cleber", "Clerberson", 100, 2)
 
