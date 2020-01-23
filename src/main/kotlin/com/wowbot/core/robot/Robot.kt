@@ -1,48 +1,50 @@
 package com.wowbot.core.robot
 
+import com.wowbot.assets.image.SpinableTexture
 import com.wowbot.assets.image.TextureManager
-import com.wowbot.assets.image.TextureManager.Image.*
+import com.wowbot.assets.standard.StdTexture
 import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.engine.GameObject
+import org.lwjgl.util.Point
 
-class Robot(val name: String, val nickname: String, val life: Int, private val index: Int): GameObject {
+class Robot(val name: String, val nickname: String, val life: Int, private val typeA: Boolean): GameObject {
 
     private val textureManager = TextureManager()
+    private var spinableTexture: SpinableTexture? = null
 
-    private var x: Float = 0f
+    private val cannon = Cannon(typeA)
+    private var point = Point(400, 400)
+
+    override fun load() {
+        val texture = textureManager.texture(if (typeA) { StdTexture.TANK_BODY_A } else { StdTexture.TANK_BODY_B })
+        spinableTexture = SpinableTexture(texture)
+        cannon.load()
+    }
 
     override fun render(context: EngineContext) {
-        //MOCKUP
-
-        if (index % 2 == 0) {
-            context.batch.draw(
-                textureManager.texture(TANK_BODY_1),
-                context.screenWidth / 2 + x,
-                context.screenHeight / 2
-            )
-            //TODO criar objeto cannon
-            context.batch.draw(
-                textureManager.texture(TANK_CANNON_1),
-                context.screenWidth / 2 + 15 + x,
-                context.screenHeight / 2 + 15
-            )
-            x += 2
-        } else {
-            context.batch.draw(
-                textureManager.texture(TANK_BODY_2),
-                context.screenWidth / 2 + x,
-                context.screenHeight / 2
-            )
-            context.batch.draw(
-                textureManager.texture(TANK_CANNON_2),
-                context.screenWidth / 2 + 15 + x,
-                context.screenHeight / 2 + 15
-            )
-            x -= 2
-        }
+        spinableTexture?.draw(context.batch, point)
+        cannon.point = this.point
+        cannon.render(context)
 
         ///val action = Script.run(battleContext)
         // Interpretar ações...
         //if (action.cannon ... )...
+    }
+
+    private fun forward() {
+        //this.point.translate()
+    }
+
+    private fun backward() {
+        //this.point.translate()
+    }
+
+    private fun rotateLeft() {
+        spinableTexture?.rotateLeft()
+
+    }
+
+    private fun rotateRight() {
+        spinableTexture?.rotateRight()
     }
 }

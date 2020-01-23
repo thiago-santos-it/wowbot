@@ -1,8 +1,8 @@
-package com.wowbot.assets.text
+package com.wowbot.assets.layout
 
 import com.wowbot.core.engine.EngineContext
 
-class TextGridLayout(private val context: EngineContext, rows: Int, col: Int) {
+class GridLayout(private val context: EngineContext, rows: Int, col: Int) {
 
     private val rowSize = context.screenHeight / rows
     private val colSize = context.screenWidth / col

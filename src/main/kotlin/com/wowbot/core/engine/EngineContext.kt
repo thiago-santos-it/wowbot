@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.wowbot.assets.sound.SoundManager
-import com.wowbot.assets.text.FontManager
+import com.wowbot.assets.font.FontManager
+import com.wowbot.assets.standard.StdFont
 
 class EngineContext: AssetController {
 
@@ -13,7 +14,7 @@ class EngineContext: AssetController {
     }
 
     val fontManager: FontManager by lazy {
-        FontManager()
+        FontManager(StdFont.ROBOT)
     }
 
     val batch: SpriteBatch by lazy {

@@ -11,6 +11,7 @@ fun main() {
       config.width = Game.screen.screenWidth
       config.height = Game.screen.screenWidth
       config.useGL30 = false
+
       LwjglApplication(Game(), config)
 }
 

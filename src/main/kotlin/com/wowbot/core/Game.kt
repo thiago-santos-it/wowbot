@@ -11,9 +11,11 @@ import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.robot.Robot
 
 class Game : ApplicationListener {
-    //TODO criar dinâmica de campeonato
-    private val robot1 = Robot("Jaum", "Demolidor", 30, 1)
-    private val robot2 = Robot("Cleber", "Clerberson", 100, 2)
+
+    //TODO Logica de campeonato
+    private val robots = Pair(
+            Robot("Jaum", "Demolidor", 30, true),
+            Robot("Cleber", "Clerberson", 100, false))
 
     private val context: EngineContext by lazy {
         EngineContext()
@@ -24,7 +26,7 @@ class Game : ApplicationListener {
     }
 
     private val arenaInformation: ArenaInformation by lazy {
-        ArenaInformation(robot1, robot2)
+        ArenaInformation(robots)
     }
 
     override fun render() {
@@ -32,8 +34,8 @@ class Game : ApplicationListener {
         context.batch.begin()
         arenaBackground.render(context)
         arenaInformation.render(context)
-        robot1.render(context)
-        robot2.render(context)
+        robots.first.render(context)
+        robots.second.render(context)
         context.batch.end()
     }
 
@@ -51,9 +53,10 @@ class Game : ApplicationListener {
 
     override fun create() {
         context.load()
-
         arenaBackground.load()
         arenaInformation.load()
+        robots.first.load()
+        robots.second.load()
 
         context.soundManager.playMusic()
 
@@ -65,6 +68,8 @@ class Game : ApplicationListener {
 
     override fun dispose() {
         context.dispose()
+        robots.first.dispose()
+        robots.second.dispose()
         arenaBackground.dispose()
         arenaInformation.dispose()
 

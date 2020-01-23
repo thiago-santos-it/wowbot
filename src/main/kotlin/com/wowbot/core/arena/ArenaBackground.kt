@@ -1,10 +1,9 @@
 package com.wowbot.core.arena
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.wowbot.assets.image.TextureManager
-import com.wowbot.assets.image.TextureManager.Image.*
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.wowbot.assets.standard.StdTexture
 import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.engine.GameObject
 
@@ -17,7 +16,7 @@ class ArenaBackground: GameObject {
 
     override fun load() {
         textureManager.load()
-        val texture = textureManager.texture(BACKGROUND)
+        val texture = textureManager.texture(StdTexture.BACKGROUND)
         texture.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat)
         textureRegion = TextureRegion(texture)
     }
