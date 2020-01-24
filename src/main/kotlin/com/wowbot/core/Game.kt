@@ -9,8 +9,9 @@ import com.wowbot.core.arena.ArenaBackground
 import com.wowbot.core.arena.ArenaInformation
 import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.robot.Robot
+import com.wowbot.core.script.Script
 
-class Game : ApplicationListener {
+class Game(private val scripts: List<Script>) : ApplicationListener {
 
     //TODO Logica de campeonato
     private val robots = Pair(

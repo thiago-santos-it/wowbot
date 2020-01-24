@@ -41,6 +41,6 @@ class SoundManager: AssetController {
     companion object {
         private val assetManager = AssetManager()
         private var playingMusic = false
-        private const val musicFile = "sounds/music.mp3"
+        private const val musicFile = "assets/sounds/music.mp3"
     }
 }

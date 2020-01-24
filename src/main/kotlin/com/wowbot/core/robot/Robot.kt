@@ -31,6 +31,7 @@ class Robot(val name: String, val nickname: String, val life: Int, private val t
         cannon.render(context)
         forward()
         rotateLeft()
+
         ///val action = Script.run(battleContext)
         // Interpretar ações...
         //if (action.cannon ... )...

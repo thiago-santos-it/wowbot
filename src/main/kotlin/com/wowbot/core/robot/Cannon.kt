@@ -1,7 +1,5 @@
 package com.wowbot.core.robot
 
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.wowbot.assets.image.SpinableTexture
 import com.wowbot.assets.image.TextureManager
 import com.wowbot.assets.standard.StdTexture
@@ -25,7 +23,7 @@ class Cannon(private val typeA: Boolean): GameObject {
 
 
     override fun render(context: EngineContext) {
-        spinableTexture?.rotateLeft()
         spinableTexture?.draw(context.batch, point)
+        spinableTexture?.rotateRight()
     }
 }
