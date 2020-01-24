@@ -5,7 +5,10 @@ import com.wowbot.assets.image.TextureManager
 import com.wowbot.assets.standard.StdTexture
 import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.engine.GameObject
+import com.wowbot.core.extensions.toRadians
 import org.lwjgl.util.Point
+import kotlin.math.cos
+import kotlin.math.sin
 
 class Robot(val name: String, val nickname: String, val life: Int, private val typeA: Boolean): GameObject {
 
@@ -13,6 +16,7 @@ class Robot(val name: String, val nickname: String, val life: Int, private val t
     private var spinableTexture: SpinableTexture? = null
 
     private val cannon = Cannon(typeA)
+    private val stepSize = 10
     private var point = Point(400, 400)
 
     override fun load() {
@@ -25,18 +29,28 @@ class Robot(val name: String, val nickname: String, val life: Int, private val t
         spinableTexture?.draw(context.batch, point)
         cannon.point = this.point
         cannon.render(context)
-
+        forward()
+        rotateLeft()
         ///val action = Script.run(battleContext)
         // Interpretar ações...
         //if (action.cannon ... )...
     }
 
     private fun forward() {
-        //this.point.translate()
+        move(1)
     }
 
     private fun backward() {
-        //this.point.translate()
+        move(-1)
+    }
+
+    private fun move(direction: Int) {
+        val angle = spinableTexture?.currentAngle() ?: 0f
+        if (spinableTexture != null) {
+            val x = stepSize * cos(angle.toRadians())
+            val y = stepSize * sin(angle.toRadians())
+            this.point.translate(direction * x.toInt(), direction * y.toInt())
+        }
     }
 
     private fun rotateLeft() {
