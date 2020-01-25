@@ -3,7 +3,7 @@
  *
  * Battle context fields at:
  *
- * com.wowbot.core.robot.BattleContext
+ * com.wowbot.game.robot.BattleContext
  *
  * WARN: Please avoid accents in any text!!
  *
@@ -17,14 +17,20 @@
  * - FIRE
  * - FIRE_HARD
  */
-val nickname = "Cleberson"
-val name = "Cleber"
+
+val memory = (bindings as javax.script.SimpleBindings)
+
+memory["nickname"] = "Cleberson"
+memory["name"] = "Cleber"
 
 enum class Action {
-    FORWARD, BACKWARD, LEFT, RIGHT, CANNON_LEFT, CANNON_RIGHT, FIRE }
+  FORWARD, BACKWARD, LEFT, RIGHT, CANNON_LEFT, CANNON_RIGHT, FIRE
+}
 
 fun run(context: Map<String, Any>): Action {
     return Action.FORWARD
 }
 
-run(bindings["context"] as Map<String, Any>).toString()
+if (memory.containsKey("context")) {
+    run(memory["context"] as Map<String, Any>).toString()
+}

@@ -3,7 +3,7 @@
  *
  * Battle context fields at:
  *
- * com.wowbot.core.robot.BattleContext
+ * com.wowbot.game.robot.BattleContext
  *
  * WARN: Please avoid accents in any text!!
  * PRO TIPS:
@@ -30,4 +30,5 @@ var Action = {
 function run(context) {
     return Action.BACKWARD;
 }
+
 run(context);

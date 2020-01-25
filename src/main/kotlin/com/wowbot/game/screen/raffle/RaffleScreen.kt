@@ -38,6 +38,6 @@ class RaffleScreen(
     }
 
     companion object {
-        private const val displayTime = 5
+        private const val displayTime = 50
     }
 }

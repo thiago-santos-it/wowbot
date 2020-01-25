@@ -6,8 +6,11 @@ import javax.script.SimpleScriptContext
 
 class Script(private val compiledScript: CompiledScript, private val scriptContext: ScriptContext = SimpleScriptContext()) {
 
+    init {
+        scriptContext.setBindings(compiledScript.engine.createBindings(), ScriptContext.ENGINE_SCOPE)
+    }
+
     fun inspect(key: String): String? {
-        scriptContext.setAttribute("context", mapOf<String, Any>(), ScriptContext.ENGINE_SCOPE)
         compiledScript.eval(scriptContext)
         return scriptContext.getAttribute(key) as? String
     }
