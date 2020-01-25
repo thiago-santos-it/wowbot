@@ -12,7 +12,7 @@ class SceneManager(
         private val championshipManager: ChampionshipManager){
 
     fun start() {
-        game.screen =  WinnerScreen(context, championshipManager.battles.first().first) //RaffleScreen(context, championshipManager.battles) { nextScreen() }
+        game.screen = RaffleScreen(context, championshipManager.battles) { nextScreen() }
     }
 
     private fun nextScreen() {

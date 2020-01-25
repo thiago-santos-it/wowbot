@@ -3,6 +3,4 @@
 - Bullet animation
 - Destruction animation
 - Sound effects
-
-- Better name for Spinnable
 - Progress bar
