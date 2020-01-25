@@ -15,6 +15,7 @@
  * - CANNON_LEFT
  * - CANNON_RIGHT
  * - FIRE
+ * - FIRE_HARD
  */
 val nickname = "Cleberson"
 val name = "Cleber"

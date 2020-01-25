@@ -18,7 +18,7 @@
  * - CANNON_LEFT
  * - CANNON_RIGHT
  * - FIRE
- * - FIRE_WITH_FORCE
+ * - FIRE_HARD
  */
 var nickname = "Demolidor";
 var name = "Jaum";

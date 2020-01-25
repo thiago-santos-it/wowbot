@@ -23,7 +23,7 @@ class Robot(private val script: Script): GameObject {
         NOTHING,
         CANNON_RIGHT,
         FIRE,
-        FIRE_WITH_FORCE
+        FIRE_HARD
     }
 
     private val textureManager = TextureManager()
@@ -59,7 +59,7 @@ class Robot(private val script: Script): GameObject {
                 Action.CANNON_LEFT -> cannon.rotateLeft()
                 Action.CANNON_RIGHT -> cannon.rotateRight()
                 Action.FIRE -> cannon.fire()
-                Action.FIRE_WITH_FORCE -> cannon.fireWithForce()
+                Action.FIRE_HARD -> cannon.fireWithForce()
                 Action.NOTHING -> {
                 }
             }
