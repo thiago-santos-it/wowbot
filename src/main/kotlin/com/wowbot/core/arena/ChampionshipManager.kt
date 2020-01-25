@@ -1,4 +1,4 @@
-package com.wowbot.core.battle
+package com.wowbot.core.arena
 
 import com.wowbot.core.engine.AssetController
 import com.wowbot.core.robot.Robot

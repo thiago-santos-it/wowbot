@@ -1,6 +1,5 @@
 package com.wowbot.core.script
 
-import com.wowbot.core.battle.BattleContext
 import javax.script.CompiledScript
 import javax.script.ScriptContext
 import javax.script.SimpleScriptContext

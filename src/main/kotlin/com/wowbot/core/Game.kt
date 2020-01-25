@@ -7,7 +7,7 @@ import java.awt.Color
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.wowbot.core.arena.ArenaBackground
 import com.wowbot.core.arena.ArenaInformation
-import com.wowbot.core.battle.ChampionshipManager
+import com.wowbot.core.arena.ChampionshipManager
 import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.robot.Robot
 import com.wowbot.core.script.Script

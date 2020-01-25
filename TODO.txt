@@ -1,0 +1,7 @@
+- Colliders
+- Battle Context
+- Bullet animation
+- Destruction animation
+- Progress bar
+- Championship screen
+- Sound effects

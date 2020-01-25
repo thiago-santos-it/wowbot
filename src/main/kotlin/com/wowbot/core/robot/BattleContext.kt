@@ -1,4 +1,4 @@
-package com.wowbot.core.battle
+package com.wowbot.core.robot
 
 data class BattleContext(var hitTheWall: Boolean) {
     fun toMap(): Map<String, Any> {

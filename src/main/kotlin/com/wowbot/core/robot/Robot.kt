@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.wowbot.assets.image.SpinableTexture
 import com.wowbot.assets.image.TextureManager
 import com.wowbot.assets.standard.StdTexture
-import com.wowbot.core.battle.BattleContext
 import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.engine.GameObject
 import com.wowbot.core.extensions.toRadians
