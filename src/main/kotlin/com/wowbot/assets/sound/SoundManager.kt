@@ -3,16 +3,19 @@ package com.wowbot.assets.sound
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
+import com.wowbot.assets.standard.StdMusic
 import com.wowbot.assets.standard.StdSound
-import com.wowbot.game.engine.AssetController
+import com.wowbot.game.core.engine.AssetController
 
 class SoundManager: AssetController {
 
     override fun load() {
-        StdSound.values().forEach { effect ->
-            assetManager.load(effect.file, Sound::class.java)
+        StdSound.values().forEach { sound ->
+            assetManager.load(sound.file, Sound::class.java)
         }
-        assetManager.load(musicFile, Music::class.java)
+        StdMusic.values().forEach { music ->
+            assetManager.load(music.file, Music::class.java)
+        }
         assetManager.finishLoading()
     }
 
@@ -26,7 +29,7 @@ class SoundManager: AssetController {
 
     fun playMusic() {
         if (!playingMusic) {
-            val music = assetManager.get<Music>(musicFile)
+            val music = assetManager.get<Music>(StdMusic.MUSIC.file)
             music.isLooping = true
             music.volume = 0f
             music.play()
@@ -41,6 +44,5 @@ class SoundManager: AssetController {
     companion object {
         private val assetManager = AssetManager()
         private var playingMusic = false
-        private const val musicFile = "assets/sounds/music.mp3"
     }
 }

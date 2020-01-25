@@ -1,4 +1,4 @@
-package com.wowbot.game.engine
+package com.wowbot.game.core.engine
 
 interface AssetController {
 

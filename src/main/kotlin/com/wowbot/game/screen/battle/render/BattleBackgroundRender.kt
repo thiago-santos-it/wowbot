@@ -1,14 +1,14 @@
-package com.wowbot.game.arena
+package com.wowbot.game.screen.battle.render
 
 import com.badlogic.gdx.graphics.Texture
 import com.wowbot.assets.image.TextureManager
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.wowbot.assets.standard.StdTexture
-import com.wowbot.game.engine.EngineContext
-import com.wowbot.game.engine.GameObject
+import com.wowbot.game.core.engine.EngineContext
+import com.wowbot.game.core.engine.GameObject
 
 
-class ArenaBackground: GameObject {
+class BattleBackgroundRender: GameObject {
 
     private val textureManager = TextureManager()
 

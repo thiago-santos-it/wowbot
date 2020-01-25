@@ -2,7 +2,7 @@ package com.wowbot.main
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-import com.wowbot.game.Game
+import com.wowbot.game.MainGame
 import com.wowbot.game.script.ScriptLoader
 import kotlin.system.exitProcess
 
@@ -10,8 +10,8 @@ fun main(args: Array<String>) {
 
       val config = LwjglApplicationConfiguration()
       config.title = "Wowbot Arena"
-      config.width = Game.screen.screenWidth
-      config.height = Game.screen.screenWidth
+      config.width = 0
+      config.height = 0
       config.useGL30 = false
 
       if (args.isEmpty()) {
@@ -20,6 +20,6 @@ fun main(args: Array<String>) {
       }
 
       val scripts = ScriptLoader(args[0]).load()
-      LwjglApplication(Game(scripts), config)
+      LwjglApplication(MainGame(scripts), config)
 }
 

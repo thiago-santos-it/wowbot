@@ -1,13 +1,13 @@
-package com.wowbot.game.arena
+package com.wowbot.game.core.logic
 
-import com.wowbot.game.engine.AssetController
+import com.wowbot.game.core.engine.AssetController
 import com.wowbot.game.robot.Robot
 
 class ChampionshipManager(private val robots: List<Robot>): AssetController {
 
-    private val winners = mutableListOf<Robot>()
     private val losers = mutableListOf<Robot>()
-    private val battles = mutableListOf<Pair<Robot, Robot>>()
+    val winners = mutableListOf<Robot>()
+    val battles = mutableListOf<Pair<Robot, Robot>>()
 
     override fun load() {
         raffle(robots)

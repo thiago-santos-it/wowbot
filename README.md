@@ -1,1 +1,8 @@
-# wowbot
+# Wow-bot
+
+
+Sample script:
+
+```$javascript
+
+```
