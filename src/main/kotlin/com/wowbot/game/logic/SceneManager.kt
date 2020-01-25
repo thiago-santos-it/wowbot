@@ -1,7 +1,7 @@
-package com.wowbot.game.core.logic
+package com.wowbot.game.logic
 
 import com.badlogic.gdx.Game
-import com.wowbot.game.core.engine.EngineContext
+import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.screen.battle.BattleScreen
 import com.wowbot.game.screen.raffle.RaffleScreen
 import com.wowbot.game.screen.winner.WinnerScreen
@@ -12,7 +12,7 @@ class SceneManager(
         private val championshipManager: ChampionshipManager){
 
     fun start() {
-        game.screen = RaffleScreen(context, championshipManager.battles) { nextScreen() }
+        game.screen =  WinnerScreen(context, championshipManager.battles.first().first) //RaffleScreen(context, championshipManager.battles) { nextScreen() }
     }
 
     private fun nextScreen() {

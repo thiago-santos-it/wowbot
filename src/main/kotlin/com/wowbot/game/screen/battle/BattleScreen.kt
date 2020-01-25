@@ -2,8 +2,8 @@ package com.wowbot.game.screen.battle
 
 import com.wowbot.game.screen.battle.render.BattleBackgroundRender
 import com.wowbot.game.screen.battle.render.BattleInformationRender
-import com.wowbot.game.core.engine.EngineContext
-import com.wowbot.game.core.engine.RenderScreen
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.RenderScreen
 import com.wowbot.game.robot.Robot
 
 

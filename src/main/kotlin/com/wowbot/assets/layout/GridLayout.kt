@@ -1,6 +1,6 @@
 package com.wowbot.assets.layout
 
-import com.wowbot.game.core.engine.EngineContext
+import com.wowbot.game.engine.EngineContext
 
 class GridLayout(private val context: EngineContext, rows: Int, col: Int) {
 

@@ -1,14 +1,9 @@
 package com.wowbot.game.screen.raffle
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.utils.Align
-import com.wowbot.assets.layout.FontLayout
-import com.wowbot.assets.layout.GridLayout
-import com.wowbot.game.core.engine.EngineContext
-import com.wowbot.game.core.engine.RenderScreen
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.RenderScreen
 import com.wowbot.game.robot.Robot
 import com.wowbot.game.screen.raffle.render.RaffleInformationRender
-import kotlin.math.floor
 
 class RaffleScreen(
         private val context: EngineContext,
@@ -38,6 +33,6 @@ class RaffleScreen(
     }
 
     companion object {
-        private const val displayTime = 50
+        private const val displayTime = 5
     }
 }

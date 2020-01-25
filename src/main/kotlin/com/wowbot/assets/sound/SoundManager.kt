@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.wowbot.assets.standard.StdMusic
 import com.wowbot.assets.standard.StdSound
-import com.wowbot.game.core.engine.AssetController
+import com.wowbot.game.engine.AssetController
 
 class SoundManager: AssetController {
 

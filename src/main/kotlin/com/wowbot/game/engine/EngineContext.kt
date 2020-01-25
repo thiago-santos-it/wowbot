@@ -1,4 +1,4 @@
-package com.wowbot.game.core.engine
+package com.wowbot.game.engine
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera

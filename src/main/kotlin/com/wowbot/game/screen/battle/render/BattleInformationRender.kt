@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
 import com.wowbot.assets.layout.FontLayout
 import com.wowbot.assets.layout.GridLayout
-import com.wowbot.game.core.engine.EngineContext
-import com.wowbot.game.core.engine.GameObject
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.GameObject
 import com.wowbot.game.robot.Robot
 
 class BattleInformationRender: GameObject {

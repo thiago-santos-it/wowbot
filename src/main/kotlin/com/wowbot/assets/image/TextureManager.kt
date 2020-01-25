@@ -3,7 +3,7 @@ package com.wowbot.assets.image
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.wowbot.assets.standard.StdTexture
-import com.wowbot.game.core.engine.AssetController
+import com.wowbot.game.engine.AssetController
 
 class TextureManager: AssetController {
 

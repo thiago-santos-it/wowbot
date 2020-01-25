@@ -1,7 +1,7 @@
 package com.wowbot.game.robot
 
-import com.wowbot.game.core.engine.EngineContext
-import com.wowbot.game.core.engine.GameObject
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.GameObject
 
 class Bullet(private val angle: Float, private val speedMultiplier: Int): GameObject {
 
