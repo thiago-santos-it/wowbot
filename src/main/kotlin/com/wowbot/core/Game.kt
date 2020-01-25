@@ -7,16 +7,18 @@ import java.awt.Color
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.wowbot.core.arena.ArenaBackground
 import com.wowbot.core.arena.ArenaInformation
+import com.wowbot.core.battle.ChampionshipManager
 import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.robot.Robot
 import com.wowbot.core.script.Script
 
 class Game(private val scripts: List<Script>) : ApplicationListener {
 
-    //TODO Logica de campeonato
-    private val robots = Pair(
-            Robot("Jaum", "Demolidor", 30, true),
-            Robot("Cleber", "Clerberson", 100, false))
+    private var currentRobots: Pair<Robot, Robot>? = null
+
+    private val championshipManager: ChampionshipManager by lazy {
+        ChampionshipManager(scripts.map { script -> Robot(script) })
+    }
 
     private val context: EngineContext by lazy {
         EngineContext()
@@ -26,17 +28,15 @@ class Game(private val scripts: List<Script>) : ApplicationListener {
         ArenaBackground()
     }
 
-    private val arenaInformation: ArenaInformation by lazy {
-        ArenaInformation(robots)
-    }
+    private val arenaInformation = ArenaInformation()
 
     override fun render() {
         clearGL()
         context.batch.begin()
         arenaBackground.render(context)
         arenaInformation.render(context)
-        robots.first.render(context)
-        robots.second.render(context)
+        currentRobots?.first?.render(context)
+        currentRobots?.second?.render(context)
         context.batch.end()
     }
 
@@ -56,33 +56,43 @@ class Game(private val scripts: List<Script>) : ApplicationListener {
         context.load()
         arenaBackground.load()
         arenaInformation.load()
-        robots.first.load()
-        robots.second.load()
+        championshipManager.load()
 
+        setupBattle()
+        setupScenario()
+    }
+
+    private fun setupScenario() {
         context.soundManager.playMusic()
 
         context.camera.setToOrtho(
-            false,
-            Gdx.graphics.width.toFloat(),
-            Gdx.graphics.height.toFloat())
+                false,
+                Gdx.graphics.width.toFloat(),
+                Gdx.graphics.height.toFloat())
+    }
+
+    private fun setupBattle() {
+        currentRobots = championshipManager.next()
+        arenaInformation.currentRobots = currentRobots
+        currentRobots?.first?.load(true)
+        currentRobots?.second?.load(false)
     }
 
     override fun dispose() {
         context.dispose()
-        robots.first.dispose()
-        robots.second.dispose()
+        currentRobots?.first?.dispose()
+        currentRobots?.second?.dispose()
         arenaBackground.dispose()
         arenaInformation.dispose()
-
     }
 
     private fun clearGL() {
         val backgroundColor = Color.BLACK
         Gdx.gl.glClearColor(
-            backgroundColor.red / 255f,
-            backgroundColor.green / 255f,
-            backgroundColor.blue / 255f,
-            backgroundColor.alpha / 255f
+                backgroundColor.red / 255f,
+                backgroundColor.green / 255f,
+                backgroundColor.blue / 255f,
+                backgroundColor.alpha / 255f
         )
         Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT)
     }

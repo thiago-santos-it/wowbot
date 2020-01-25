@@ -6,21 +6,24 @@
  * com.wowbot.core.robot.BattleContext
  *
  * WARN: Please avoid accents in any text!!
- * PRO TIP: Copy Battle Context class as a comment here!!
+ *
+ * ACTIONS:
+ * - FORWARD
+ * - BACKWARD
+ * - LEFT
+ * - RIGHT
+ * - CANNON_LEFT
+ * - CANNON_RIGHT
+ * - FIRE
  */
 val nickname = "Cleberson"
 val name = "Cleber"
 
 enum class Action {
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT,
-    CANNON_LEFT,
-    CANNON_RIGHT,
-    FIRE
+    FORWARD, BACKWARD, LEFT, RIGHT, CANNON_LEFT, CANNON_RIGHT, FIRE }
+
+fun run(context: Map<String, Any>): Action {
+    return Action.FORWARD
 }
 
-fun run(context: BattleContext): String {
-    return Action.FORWARD.toString()
-}
+run(bindings["context"] as Map<String, Any>).toString()

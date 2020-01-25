@@ -10,6 +10,7 @@ import com.wowbot.core.engine.AssetController
 
 class FontManager: AssetController {
 
+    private val cache = mutableMapOf<String, BitmapFont>()
     private lateinit var fontFile: String
 
     constructor(font: StdFont) {
@@ -25,15 +26,24 @@ class FontManager: AssetController {
     }
 
     fun font(size: Int, color: Color = Color.WHITE): BitmapFont {
-        val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
-        parameter.size = size
-        parameter.color = color
-        return generator.generateFont(parameter)
+        val key = "key-$size-${color.toIntBits()}"
+        val cachedFont = cache.getOrDefault(key,null)
+        return if (cachedFont != null) {
+            cachedFont
+        } else {
+            val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
+            parameter.size = size
+            parameter.color = color
+            val font = generator.generateFont(parameter)
+            cache[key] = font
+            return font
+        }
     }
 
     override fun load() {}
 
     override fun dispose() {
         generator.dispose()
+        cache.clear()
     }
 }

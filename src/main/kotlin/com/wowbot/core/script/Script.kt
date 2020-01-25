@@ -1,18 +1,29 @@
 package com.wowbot.core.script
 
-import com.wowbot.core.robot.BattleContext
-import javax.script.Bindings
-import javax.script.ScriptEngine
+import com.wowbot.core.battle.BattleContext
+import javax.script.CompiledScript
+import javax.script.ScriptContext
+import javax.script.SimpleScriptContext
 
-class Script(private val engine: ScriptEngine, private val scope: Bindings) {
+class Script(private val compiledScript: CompiledScript, private val scriptContext: ScriptContext = SimpleScriptContext()) {
 
-    fun run(context: BattleContext) {
-        scope["context"] = context
-        try {
-            engine.eval("command = run(context)", scope)
-            val command = scope["command"]
+    fun inspect(key: String): String? {
+        scriptContext.setAttribute("context", mapOf<String, Any>(), ScriptContext.ENGINE_SCOPE)
+        compiledScript.eval(scriptContext)
+        return scriptContext.getAttribute(key) as? String
+    }
+
+    fun run(runContext: Map<String, Any>): String? {
+        return try {
+
+            scriptContext.setAttribute("context", runContext, ScriptContext.ENGINE_SCOPE)
+            compiledScript.eval(scriptContext) as? String
+
         } catch(e: Exception) {
             println("Operation ignored!!!")
+            e.printStackTrace()
+            null
         }
+
     }
 }

@@ -7,9 +7,13 @@ import com.wowbot.core.engine.EngineContext
 import com.wowbot.core.engine.GameObject
 import com.wowbot.core.robot.Robot
 
-class ArenaInformation(private val robots: Pair<Robot, Robot>): GameObject {
+class ArenaInformation: GameObject {
+
+    var currentRobots: Pair<Robot, Robot>? = null
 
     override fun render(context: EngineContext) {
+        val robots = currentRobots ?: return
+
         val layout = GridLayout(context, rows = 40, col = 100)
         val batch = context.batch
 

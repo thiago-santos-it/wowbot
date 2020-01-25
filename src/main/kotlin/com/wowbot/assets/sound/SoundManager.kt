@@ -28,7 +28,7 @@ class SoundManager: AssetController {
         if (!playingMusic) {
             val music = assetManager.get<Music>(musicFile)
             music.isLooping = true
-            music.volume = 1f
+            music.volume = 0f
             music.play()
             playingMusic = music.isPlaying
         }
