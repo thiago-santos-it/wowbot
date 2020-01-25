@@ -1,10 +1,8 @@
-package com.wowbot.core.script
+package com.wowbot.game.script
 
 import java.io.File
 import javax.script.ScriptEngineManager
 import javax.script.Compilable
-
-
 
 class ScriptLoader(private val scriptsDirectory: String) {
 

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.Color
 import com.wowbot.assets.standard.StdFont
-import com.wowbot.core.engine.AssetController
+import com.wowbot.game.engine.AssetController
 
 
 class FontManager: AssetController {

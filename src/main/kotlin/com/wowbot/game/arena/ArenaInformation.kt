@@ -1,11 +1,11 @@
-package com.wowbot.core.arena
+package com.wowbot.game.arena
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Align
 import com.wowbot.assets.layout.GridLayout
-import com.wowbot.core.engine.EngineContext
-import com.wowbot.core.engine.GameObject
-import com.wowbot.core.robot.Robot
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.GameObject
+import com.wowbot.game.robot.Robot
 
 class ArenaInformation: GameObject {
 

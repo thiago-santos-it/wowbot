@@ -2,8 +2,8 @@ package com.wowbot.main
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-import com.wowbot.core.Game
-import com.wowbot.core.script.ScriptLoader
+import com.wowbot.game.Game
+import com.wowbot.game.script.ScriptLoader
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {

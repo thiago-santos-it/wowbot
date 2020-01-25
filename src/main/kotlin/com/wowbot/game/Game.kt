@@ -1,16 +1,16 @@
-package com.wowbot.core
+package com.wowbot.game
 
 import com.badlogic.gdx.ApplicationListener
 import com.badlogic.gdx.Gdx
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import com.badlogic.gdx.utils.viewport.ScreenViewport
-import com.wowbot.core.arena.ArenaBackground
-import com.wowbot.core.arena.ArenaInformation
-import com.wowbot.core.arena.ChampionshipManager
-import com.wowbot.core.engine.EngineContext
-import com.wowbot.core.robot.Robot
-import com.wowbot.core.script.Script
+import com.wowbot.game.arena.ArenaBackground
+import com.wowbot.game.arena.ArenaInformation
+import com.wowbot.game.arena.ChampionshipManager
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.robot.Robot
+import com.wowbot.game.script.Script
 
 class Game(private val scripts: List<Script>) : ApplicationListener {
 

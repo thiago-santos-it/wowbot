@@ -1,11 +1,11 @@
-package com.wowbot.core.arena
+package com.wowbot.game.arena
 
 import com.badlogic.gdx.graphics.Texture
 import com.wowbot.assets.image.TextureManager
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.wowbot.assets.standard.StdTexture
-import com.wowbot.core.engine.EngineContext
-import com.wowbot.core.engine.GameObject
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.GameObject
 
 
 class ArenaBackground: GameObject {

@@ -1,4 +1,4 @@
-package com.wowbot.core.script
+package com.wowbot.game.script
 
 import javax.script.CompiledScript
 import javax.script.ScriptContext

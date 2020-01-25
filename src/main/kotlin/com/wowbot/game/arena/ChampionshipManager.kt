@@ -1,7 +1,7 @@
-package com.wowbot.core.arena
+package com.wowbot.game.arena
 
-import com.wowbot.core.engine.AssetController
-import com.wowbot.core.robot.Robot
+import com.wowbot.game.engine.AssetController
+import com.wowbot.game.robot.Robot
 
 class ChampionshipManager(private val robots: List<Robot>): AssetController {
 

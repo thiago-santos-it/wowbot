@@ -1,10 +1,10 @@
-package com.wowbot.core.robot
+package com.wowbot.game.robot
 
 import com.wowbot.assets.image.SpinableTexture
 import com.wowbot.assets.image.TextureManager
 import com.wowbot.assets.standard.StdTexture
-import com.wowbot.core.engine.EngineContext
-import com.wowbot.core.engine.GameObject
+import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.GameObject
 import org.lwjgl.util.Point
 
 class Cannon: GameObject {

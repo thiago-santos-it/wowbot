@@ -1,7 +1,8 @@
-- Colliders
+- Collide
 - Battle Context
 - Bullet animation
 - Destruction animation
 - Progress bar
 - Championship screen
 - Sound effects
+- Better name for Spinnable
