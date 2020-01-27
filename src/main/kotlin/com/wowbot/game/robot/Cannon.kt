@@ -38,8 +38,8 @@ class Cannon(private val typeA: Boolean): GameObject {
         }
     }
 
-    fun fireWithForce() {
-        fire(2)
+    fun fireHard() {
+        repeat(amountOfBullets) { fire(2) }
     }
 
     override fun render(context: EngineContext) {

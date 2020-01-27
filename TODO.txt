@@ -1,6 +1,2 @@
-- Bullet animation & sorteio de posição
-
 - Collide
-- Destruction animation
 - Battle Context & Script improvements
-- Sound effects

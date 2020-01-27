@@ -16,7 +16,7 @@ class RaffleScreen(
 
     override fun show() {
         super.show()
-        raffleInformationRender.load()
+        raffleInformationRender.load()  
     }
 
     override fun render(delta: Float) {

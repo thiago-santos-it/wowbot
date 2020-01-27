@@ -24,11 +24,11 @@ var nickname = "Demolidor";
 var name = "Jaum";
 
 var Action = {
-    FORWARD: "FORWARD", BACKWARD: "BACKWARD", LEFT: "LEFT", RIGHT: "RIGHT", CANNON_LEFT: "CANNON_LEFT", CANNON_RIGHT: "CANNON_RIGHT", FIRE: "FIRE"
+    FORWARD: "FORWARD", BACKWARD: "BACKWARD", LEFT: "LEFT", RIGHT: "RIGHT", CANNON_LEFT: "CANNON_LEFT", CANNON_RIGHT: "CANNON_RIGHT", FIRE: "FIRE", FIRE_HARD: "FIRE_HARD"
 };
 
 function run(context) {
-    return Action.FIRE;
+    return Action.FIRE_HARD;
 }
 
 var action = run(context);

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import org.lwjgl.util.Point
 
 class RotatableTexture(val texture: Texture,
-                       private val rotationStep: Float = 10f,
+                       private val rotationStep: Float = 5f,
                        private val pointOffset: Point = Point(0, 0),
                        private val widthOffset: Float = 0f,
                        private val heightOffset: Float = 0f,

@@ -41,15 +41,15 @@ class BattleInformationRender: GameObject {
 
         val robotNicknameFont = fontManager.font(fontManager.size(3), Color.GREEN)
         val robot1Nickname = robots.first.nickname
-        robotNicknameFont.draw(batch, robot1Nickname, gridLayout.x(20), gridLayout.y(2, 10), 0f, Align.center, false)
+        robotNicknameFont.draw(batch, robot1Nickname, gridLayout.x(25), gridLayout.y(2, 10), 0f, Align.center, false)
         val robot2Nickname = robots.second.nickname
-        robotNicknameFont.draw(batch, robot2Nickname, gridLayout.x(70), gridLayout.y(2, 10), 0f, Align.center, false)
+        robotNicknameFont.draw(batch, robot2Nickname, gridLayout.x(75), gridLayout.y(2, 10), 0f, Align.center, false)
 
         val robotOwnerFont = fontManager.font(fontManager.size(4), Color.LIME)
         val robot1Owner = robots.first.name
-        robotOwnerFont.draw(batch, "($robot1Owner)", gridLayout.x(20), gridLayout.y(4), 0f, Align.center, false)
+        robotOwnerFont.draw(batch, "($robot1Owner)", gridLayout.x(25), gridLayout.y(4), 0f, Align.center, false)
         val robot2Owner = robots.second.name
-        robotOwnerFont.draw(batch, "($robot2Owner)", gridLayout.x(70), gridLayout.y(4), 0f, Align.center, false)
+        robotOwnerFont.draw(batch, "($robot2Owner)", gridLayout.x(75), gridLayout.y(4), 0f, Align.center, false)
 
     }
 }

@@ -16,12 +16,12 @@ class BulletRender: GameObject {
     override fun render(context: EngineContext) {
         val localPoint = point ?: return
 
-        val typeA = elapsedSteps % 2 == 1
-        shape.color = if (typeA) { Color.RED } else { Color.ORANGE }
+        val odd = elapsedSteps % 2 == 1
+        shape.color = if (odd) { Color.RED } else { Color.ORANGE }
 
         context.batch.end()
         shape.begin(ShapeRenderer.ShapeType.Filled)
-        shape.circle(localPoint.x.toFloat(), localPoint.y.toFloat(), if (typeA) { 4f } else { 6f })
+        shape.circle(localPoint.x.toFloat(), localPoint.y.toFloat(), if (odd) { 4f } else { 6f })
         shape.end()
         context.batch.begin()
 

@@ -16,6 +16,9 @@ class BattleScreen(
 
     private val arenaInformation = BattleInformationRender()
 
+    private val engGameWaitInSeconds = 3
+    private var endGameElapsedTime = 0f
+
     init {
         arenaBackground.load()
         arenaInformation.load()
@@ -29,8 +32,20 @@ class BattleScreen(
     override fun render(delta: Float) {
         arenaBackground.render(context)
         arenaInformation.render(context)
+
+        nextIfNeeded(delta)
+
         robots.first.render(context)
         robots.second.render(context)
+    }
+
+    private fun nextIfNeeded(delta: Float) {
+        if (robots.first.life <= 0 || robots.second.life <= 0) {
+            endGameElapsedTime += delta
+            if (endGameElapsedTime > engGameWaitInSeconds) {
+                next()
+            }
+        }
     }
 
     override fun dispose() {

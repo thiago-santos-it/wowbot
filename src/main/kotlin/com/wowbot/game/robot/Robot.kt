@@ -1,6 +1,8 @@
 package com.wowbot.game.robot
 
 import com.badlogic.gdx.Gdx
+import com.wowbot.assets.sound.SoundManager
+import com.wowbot.assets.standard.StdSound
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
 import com.wowbot.extensions.toRadians
@@ -33,14 +35,16 @@ class Robot(private val script: Script): GameObject {
     private var elapsedSteps: Float = 0f
     private var typeA: Boolean = false
 
+    private val hitDamage = 10
     private val stepSize = 10
     private val actionStepsDuration = 10f
 
-    var life = 100f
+    var life = 12f
     val name: String = script.inspect("name") ?: "No name"
     val nickname: String = script.inspect("nickname") ?: "No nickname"
 
     private val battleContext = BattleContext(false)
+    private var collision = false
 
     fun load(typeA: Boolean) {
 
@@ -53,13 +57,19 @@ class Robot(private val script: Script): GameObject {
     }
 
     override fun render(context: EngineContext) {
+
+        val soundManager = context.soundManager
+
         randomPositionIfNeeded(context)
+        performCollision(context)
 
         robotRender?.point = this.point
         robotRender?.render(context)
 
-        cannon?.point = this.point
-        cannon?.render(context)
+        if (life > 0) {
+            cannon?.point = this.point
+            cannon?.render(context)
+        }
 
         if (elapsedSteps > actionStepsDuration) {
             elapsedSteps = 0f
@@ -67,35 +77,46 @@ class Robot(private val script: Script): GameObject {
         }
 
         elapsedSteps++
-        performAction(currentAction)
+        performAction(currentAction, soundManager)
     }
 
-    private fun randomPositionIfNeeded(context: EngineContext) {
-        if (this.point == null && this.robotRender != null) {
-            val x = (context.screenWidth - 10 - (robotRender?.width() ?: 0)).toInt()
-            val y = Random.nextInt(robotRender?.height() ?: 0, (context.screenHeight - (robotRender?.height() ?: 0)).toInt())
-            this.point = Point(if (typeA) { 10 } else { x }, y)
+    private fun performCollision(context: EngineContext) {
+
+        val soundManager = context.soundManager
+
+        if (collision) {
+            collision = false
+            life -= hitDamage
+            if (life <= 0) {
+                soundManager.play(StdSound.EXPLODE)
+            } else {
+                soundManager.play(StdSound.HIT)
+            }
         }
     }
 
-    private fun performAction(action: String?) {
+    private fun performAction(action: String?, soundManager: SoundManager) {
         if (action == null) { return }
         try {
             when (Action.valueOf(action)) {
-                Action.FORWARD -> move(1)
-                Action.BACKWARD -> move(-1)
-                Action.LEFT -> robotRender?.rotateLeft()
-                Action.RIGHT -> robotRender?.rotateRight()
-                Action.CANNON_LEFT -> cannon?.rotateLeft()
-                Action.CANNON_RIGHT -> cannon?.rotateRight()
-                Action.FIRE -> cannon?.fire()
-                Action.FIRE_HARD -> cannon?.fireWithForce()
+                Action.FORWARD -> { move(1); soundManager.play(StdSound.RUN) }
+                Action.BACKWARD -> { move(-1); soundManager.play(StdSound.RUN) }
+                Action.LEFT -> { robotRender?.rotateLeft(); soundManager.play(StdSound.RUN) }
+                Action.RIGHT -> { robotRender?.rotateRight(); soundManager.play(StdSound.RUN) }
+                Action.CANNON_LEFT -> { cannon?.rotateLeft(); soundManager.play(StdSound.RUN) }
+                Action.CANNON_RIGHT -> { cannon?.rotateRight(); soundManager.play(StdSound.RUN) }
+                Action.FIRE -> { cannon?.fire();  soundManager.play(StdSound.FIRE) }
+                Action.FIRE_HARD -> { cannon?.fireHard(); soundManager.play(StdSound.FIRE) }
                 Action.NOTHING -> {
                 }
             }
         } catch (e: Exception) {
             print("Invalid action")
         }
+    }
+
+    fun collide() {
+        collision = true
     }
 
     private fun move(direction: Int) {
@@ -117,6 +138,14 @@ class Robot(private val script: Script): GameObject {
                 localPoint.y = futurePoint.y
             }
             battleContext.hitTheWall = !hitTheWall
+        }
+    }
+
+    private fun randomPositionIfNeeded(context: EngineContext) {
+        if (this.point == null && this.robotRender != null) {
+            val x = (context.screenWidth - 10 - (robotRender?.width() ?: 0)).toInt()
+            val y = Random.nextInt(robotRender?.height() ?: 0, (context.screenHeight - (robotRender?.height() ?: 0)).toInt())
+            this.point = Point(if (typeA) { 10 } else { x }, y)
         }
     }
 }

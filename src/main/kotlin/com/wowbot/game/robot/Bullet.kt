@@ -1,7 +1,5 @@
 package com.wowbot.game.robot
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.wowbot.extensions.toRadians
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
@@ -17,8 +15,8 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
     private var elapsedSteps = 0
 
     private val bulletRender = BulletRender()
-    private val hiddenSteps = 5
-    private val stepsDuration = 100
+    private val hiddenSteps = 3
+    private val stepsDuration = 60
     private val point = point
 
     private val stepSize = 10
