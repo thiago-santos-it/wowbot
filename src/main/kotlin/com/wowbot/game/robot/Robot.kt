@@ -6,6 +6,8 @@ import com.wowbot.assets.standard.StdSound
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
 import com.wowbot.extensions.toRadians
+import com.wowbot.game.robot.context.BattleContext
+import com.wowbot.game.robot.context.RobotContext
 import com.wowbot.game.robot.render.RobotRender
 import com.wowbot.game.script.Script
 import org.lwjgl.util.Point
@@ -39,12 +41,27 @@ class Robot(private val script: Script): GameObject {
     private val stepSize = 10
     private val actionStepsDuration = 10f
 
-    var life = 12f
+    var hitTheWall = false
+    var life = 100f
+    var scriptParameters = mapOf<String, Any>()
+
     val name: String = script.inspect("name") ?: "No name"
     val nickname: String = script.inspect("nickname") ?: "No nickname"
 
-    private val battleContext = BattleContext(false)
     private var collision = false
+
+    fun context(): RobotContext {
+        return RobotContext(
+                hitTheWall = hitTheWall,
+                life = life,
+                x = point?.x ?: 0,
+                y = point?.y ?: 0,
+                robotAngle = robotRender?.currentAngle() ?: 0f,
+                cannonAngle = cannon?.currentAngle() ?: 0f,
+                runningBullets = cannon?.bullets?.size ?: 0,
+                bulletsLimit = cannon?.amountOfBullets ?: 0,
+                lastActionName = currentAction.toString())
+    }
 
     fun load(typeA: Boolean) {
 
@@ -73,7 +90,7 @@ class Robot(private val script: Script): GameObject {
 
         if (elapsedSteps > actionStepsDuration) {
             elapsedSteps = 0f
-            currentAction = script.run(battleContext.toMap()) ?: "${Action.NOTHING}"
+            currentAction = script.run(scriptParameters) ?: "${Action.NOTHING}"
         }
 
         elapsedSteps++
@@ -137,7 +154,7 @@ class Robot(private val script: Script): GameObject {
                 localPoint.x = futurePoint.x
                 localPoint.y = futurePoint.y
             }
-            battleContext.hitTheWall = !hitTheWall
+            this.hitTheWall = !hitTheWall
         }
     }
 

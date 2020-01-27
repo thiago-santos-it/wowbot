@@ -31,9 +31,9 @@ class BattleInformationRender: GameObject {
         mainFont.draw(batch, mainText, gridLayout.screenCenter.x.toFloat(), gridLayout.y(1), 0f, Align.center, false)
 
         progressBarA.setPosition(gridLayout.x(2), gridLayout.y(2))
-        progressBarB.setPosition(gridLayout.x(columns/2 + 4), gridLayout.y(2))
+        progressBarB.setPosition(gridLayout.x(columns / 2 + 4), gridLayout.y(2))
 
-        progressBarA.value = robots.first.life - 10
+        progressBarA.value = robots.first.life
         progressBarB.value = robots.second.life
 
         progressBarA.draw(context.batch, 1f)

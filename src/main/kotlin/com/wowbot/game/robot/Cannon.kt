@@ -7,9 +7,10 @@ import org.lwjgl.util.Point
 
 class Cannon(private val typeA: Boolean): GameObject {
 
-    private val amountOfBullets = 5
-    private val bullets = mutableListOf<Bullet>()
     private var cannonRender: CannonRender? = null
+
+    val bullets = mutableListOf<Bullet>()
+    val amountOfBullets = 5
 
     var point: Point? = null
 
@@ -40,6 +41,10 @@ class Cannon(private val typeA: Boolean): GameObject {
 
     fun fireHard() {
         repeat(amountOfBullets) { fire(2) }
+    }
+
+    fun currentAngle(): Float? {
+        return cannonRender?.currentAngle()
     }
 
     override fun render(context: EngineContext) {

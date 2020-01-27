@@ -5,6 +5,9 @@ import com.wowbot.game.screen.battle.render.BattleInformationRender
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.ui.RenderScreen
 import com.wowbot.game.robot.Robot
+import com.wowbot.game.robot.context.BattleContext
+import com.wowbot.game.robot.context.RobotContext
+import kotlin.math.hypot
 
 
 class BattleScreen(
@@ -35,8 +38,34 @@ class BattleScreen(
 
         nextIfNeeded(delta)
 
+        val robotAContext = robots.first.context()
+        val robotBContext = robots.second.context()
+
+        robots.first.scriptParameters = robotContextPatameters(robotAContext, robotBContext)
         robots.first.render(context)
+
+        robots.second.scriptParameters = robotContextPatameters(robotBContext, robotAContext)
         robots.second.render(context)
+    }
+
+    fun robotContextPatameters(robot: RobotContext, opponent: RobotContext): Map<String, Any> {
+
+        val opponentUp = robot.x < opponent.x
+        val opponentDown = !opponentUp
+        val opponentLeft = robot.y > opponent.y
+        val opponentRight = !opponentLeft
+        val opponentDistance = hypot((robot.x - opponent.x).toFloat(), (robot.y - opponent.y).toFloat())
+
+        return BattleContext(
+                robotContext = robot,
+                fieldWidth = context.screenWidth,
+                fieldHeight = context.screenHeight,
+                opponentUp = opponentUp,
+                opponentDown = opponentDown,
+                opponentLeft = opponentLeft,
+                opponentRight = opponentRight,
+                opponentDistance = opponentDistance
+                ).toMap()
     }
 
     private fun nextIfNeeded(delta: Float) {

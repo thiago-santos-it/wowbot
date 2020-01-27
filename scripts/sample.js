@@ -3,7 +3,7 @@
  *
  * Battle context fields at:
  *
- * com.wowbot.game.robot.BattleContext
+ * com.wowbot.game.robot.context.BattleContext
  *
  * WARN: Please avoid accents in any text!!
  * PRO TIPS:
