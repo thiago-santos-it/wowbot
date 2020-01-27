@@ -12,6 +12,6 @@ class Bullet(private val angle: Float, private val speedMultiplier: Int): GameOb
     }
 
     companion object {
-        const val MAX = 5
+        const val max = 5
     }
 }

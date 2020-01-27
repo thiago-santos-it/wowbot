@@ -1,12 +1,10 @@
 package com.wowbot.game.robot
 
 import com.badlogic.gdx.Gdx
-import com.wowbot.assets.image.RotatableTexture
-import com.wowbot.assets.image.TextureManager
-import com.wowbot.assets.standard.StdTexture
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
 import com.wowbot.extensions.toRadians
+import com.wowbot.game.robot.render.RobotRender
 import com.wowbot.game.script.Script
 import org.lwjgl.util.Point
 import kotlin.math.cos
@@ -26,44 +24,62 @@ class Robot(private val script: Script): GameObject {
         FIRE_HARD
     }
 
-    private val textureManager = TextureManager()
-    private var rotatableTexture: RotatableTexture? = null
+    private var cannon: Cannon? = null
+    private var robotRender: RobotRender? = null
+    private var currentAction: String? = null
 
-    private val cannon = Cannon()
-    private val battleContext = BattleContext(false)
+    private var point: Point = Point(400, 400)
+    private var elapsedSteps: Float = 0f
+
     private val stepSize = 10
-    private var point = Point(400, 400)
+    private val actionStepsDuration = 10f
 
     var life = 100f
     val name: String = script.inspect("name") ?: "No name"
     val nickname: String = script.inspect("nickname") ?: "No nickname"
 
+    private val battleContext = BattleContext(false)
+
     fun load(typeA: Boolean) {
-        val texture = textureManager.texture(if (typeA) { StdTexture.TANK_BODY_A } else { StdTexture.TANK_BODY_B })
-        rotatableTexture = RotatableTexture(texture)
-        cannon.load()
+        robotRender = RobotRender(typeA)
+        cannon = Cannon(typeA)
+        cannon?.load()
+        robotRender?.load()
     }
 
     override fun render(context: EngineContext) {
-        rotatableTexture?.draw(context.batch, point)
-        cannon.point = this.point
-        cannon.render(context)
 
+        robotRender?.point = this.point
+        robotRender?.render(context)
+
+        cannon?.point = this.point
+        cannon?.render(context)
+
+        if (elapsedSteps > actionStepsDuration) {
+            elapsedSteps = 0f
+            currentAction = script.run(battleContext.toMap()) ?: "${Action.NOTHING}"
+        }
+
+        elapsedSteps++
+        performAction(currentAction)
+    }
+
+    private fun performAction(action: String?) {
+        if (action == null) { return }
         try {
-            val actionName = script.run(battleContext.toMap()) ?: "${Action.NOTHING}"
-            when (Action.valueOf(actionName)) {
+            when (Action.valueOf(action)) {
                 Action.FORWARD -> forward()
                 Action.BACKWARD -> backward()
                 Action.LEFT -> rotateLeft()
                 Action.RIGHT -> rotateRight()
-                Action.CANNON_LEFT -> cannon.rotateLeft()
-                Action.CANNON_RIGHT -> cannon.rotateRight()
-                Action.FIRE -> cannon.fire()
-                Action.FIRE_HARD -> cannon.fireWithForce()
+                Action.CANNON_LEFT -> cannon?.rotateLeft()
+                Action.CANNON_RIGHT -> cannon?.rotateRight()
+                Action.FIRE -> cannon?.fire()
+                Action.FIRE_HARD -> cannon?.fireWithForce()
                 Action.NOTHING -> {
                 }
             }
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             print("Invalid action")
         }
     }
@@ -77,25 +93,25 @@ class Robot(private val script: Script): GameObject {
     }
 
     private fun rotateLeft() {
-        rotatableTexture?.rotateLeft()
+        robotRender?.rotateLeft()
 
     }
 
     private fun rotateRight() {
-        rotatableTexture?.rotateRight()
+        robotRender?.rotateRight()
     }
 
     private fun move(direction: Int) {
-        val angle = rotatableTexture?.currentAngle() ?: 0f
-        if (rotatableTexture != null) {
+        val angle = robotRender?.currentAngle() ?: 0f
+        if (robotRender != null) {
 
             val x = stepSize * cos(angle.toRadians())
             val y = stepSize * sin(angle.toRadians())
 
             val futurePoint = Point(this.point.x + direction * x.toInt(), this.point.y + direction * y.toInt())
 
-            val width = Gdx.graphics.width - (rotatableTexture?.texture?.width ?: 0)
-            val height = Gdx.graphics.height - (rotatableTexture?.texture?.height ?: 0)
+            val width = Gdx.graphics.width - (robotRender?.width() ?: 0)
+            val height = Gdx.graphics.height - (robotRender?.height() ?: 0)
 
             val hitTheWall = futurePoint.x > width || futurePoint.x < 0 || futurePoint.y < 0 || futurePoint.y > height
             if (!hitTheWall) {
