@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.wowbot.extensions.toRadians
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
+import com.wowbot.game.robot.render.BulletRender
 import org.lwjgl.util.Point
 import kotlin.math.cos
 import kotlin.math.sin
@@ -13,9 +14,9 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
 
     var done = false
 
-    private val shape = ShapeRenderer()
     private var elapsedSteps = 0
 
+    private val bulletRender = BulletRender()
     private val hiddenSteps = 5
     private val stepsDuration = 100
     private val point = point
@@ -27,17 +28,10 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
         if (elapsedSteps > stepsDuration) {
             done = true
         } else {
-
             move()
+            bulletRender.point = point
             if (elapsedSteps > hiddenSteps) {
-                val typeA = elapsedSteps % 2 == 1
-                shape.color = if (typeA) { Color.RED } else { Color.ORANGE }
-
-                context.batch.end()
-                shape.begin(ShapeRenderer.ShapeType.Filled)
-                shape.circle(point.x.toFloat(), point.y.toFloat(), if (typeA) { 4f } else { 6f })
-                shape.end()
-                context.batch.begin()
+                bulletRender.render(context)
             }
         }
         elapsedSteps++
