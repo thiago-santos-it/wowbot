@@ -27,7 +27,7 @@ class BattleInformationRender: GameObject {
         val batch = context.batch
 
         val mainText = "VS"
-        val mainFont = fontManager.font(fontManager.size(1), Color.BLUE)
+        val mainFont = fontManager.font(fontManager.size(1), Color.GREEN)
         mainFont.draw(batch, mainText, gridLayout.screenCenter.x.toFloat(), gridLayout.y(1), 0f, Align.center, false)
 
         progressBarA.setPosition(gridLayout.x(2), gridLayout.y(2))

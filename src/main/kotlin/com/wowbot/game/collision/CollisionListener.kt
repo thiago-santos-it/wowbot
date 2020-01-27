@@ -5,7 +5,11 @@ import org.lwjgl.util.Rectangle
 
 
 interface CollisionListener {
+
     fun center() : Point?
+
     fun rect(): Rectangle?
+
     fun collide()
+
 }

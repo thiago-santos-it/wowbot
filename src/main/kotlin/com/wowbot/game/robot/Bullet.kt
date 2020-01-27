@@ -1,5 +1,6 @@
 package com.wowbot.game.robot
 
+import com.wowbot.assets.standard.StdSound
 import com.wowbot.extensions.toRadians
 import com.wowbot.game.collision.CollisionListener
 import com.wowbot.game.collision.CollisionManager
@@ -24,12 +25,18 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
     private val point = point
 
     private val stepSize = 10
+    private var playSound = true
 
     init {
         CollisionManager.register(this)
     }
 
     override fun render(context: EngineContext) {
+
+        if (playSound) {
+            context.soundManager.play(StdSound.FIRE)
+            playSound = false
+        }
 
         if (elapsedSteps > stepsDuration) {
             done = true

@@ -21,7 +21,7 @@ class SceneManager(
 
         if (robots == null) {
 
-            val winners = championshipManager.winners
+            val winners = championshipManager.winners.toList()
             championshipManager.nextLevel()
 
             if (winners.size == 1) {
@@ -30,7 +30,7 @@ class SceneManager(
                 game.screen = RaffleScreen(context, championshipManager.battles) { nextScreen() }
             }
         } else {
-            game.screen = BattleScreen(context, robots) { nextScreen() }
+            game.screen = BattleScreen(context, robots, championshipManager) { nextScreen() }
         }
     }
 }

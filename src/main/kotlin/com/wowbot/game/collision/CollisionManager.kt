@@ -9,6 +9,6 @@ object CollisionManager {
     }
 
     fun detect() {
-
+        //TODO
     }
 }

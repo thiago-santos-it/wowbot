@@ -1,5 +1,6 @@
 package com.wowbot.game.screen.battle
 
+import com.wowbot.game.championship.ChampionshipManager
 import com.wowbot.game.screen.battle.render.BattleBackgroundRender
 import com.wowbot.game.screen.battle.render.BattleInformationRender
 import com.wowbot.game.engine.EngineContext
@@ -13,6 +14,7 @@ import kotlin.math.hypot
 class BattleScreen(
         private val context: EngineContext,
         private val robots: Pair<Robot, Robot>,
+        private val championshipManager: ChampionshipManager,
         private val next: () -> Unit): RenderScreen() {
 
     private val arenaBackground = BattleBackgroundRender()
@@ -70,8 +72,20 @@ class BattleScreen(
 
     private fun nextIfNeeded(delta: Float) {
         if (robots.first.life <= 0 || robots.second.life <= 0) {
+
             endGameElapsedTime += delta
+
             if (endGameElapsedTime > engGameWaitInSeconds) {
+
+                if (robots.first.life <= 0) {
+                    championshipManager.loser(robots.first)
+                    championshipManager.winner(robots.first)
+                }
+
+                if (robots.second.life <= 0) {
+                    championshipManager.winner(robots.first)
+                    championshipManager.loser(robots.first)
+                }
                 next()
             }
         }
