@@ -28,7 +28,6 @@ class MainGame(private val scripts: List<Script>): Game() {
         clearGL()
         context.batch.begin()
         super.render()
-        CollisionManager.detect()
         context.batch.end()
     }
 

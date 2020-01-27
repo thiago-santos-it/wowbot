@@ -8,7 +8,7 @@ interface CollisionListener {
 
     fun center() : Point?
 
-    fun rect(): Rectangle?
+    fun rectangle(): Rectangle?
 
     fun collide()
 

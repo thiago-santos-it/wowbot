@@ -41,6 +41,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
     private val stepSize = 10
     private val actionStepsDuration = 10f
 
+    var stop = false
     var hitTheWall = false
     var life = 100f
     var scriptParameters = mapOf<String, Any>()
@@ -89,7 +90,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
             cannon?.render(context)
         }
 
-        if (elapsedSteps > actionStepsDuration) {
+        if (!stop && elapsedSteps > actionStepsDuration) {
             elapsedSteps = 0f
             try {
                 currentAction = Action.valueOf(script.run(scriptParameters) ?: "")
@@ -110,7 +111,6 @@ class Robot(private val script: Script): GameObject, CollisionListener {
     }
 
     private fun performCollision(context: EngineContext) {
-
         if (collision) {
             collision = false
             life -= hitDamage
@@ -140,7 +140,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
         return Point(localPoint.x + localWidth / 2, localPoint.y + localHeight)
     }
 
-    override fun rect(): Rectangle? {
+    override fun rectangle(): Rectangle? {
         val localPoint = point ?: return null
         val localHeight = robotRender?.height() ?: return null
         val localWidth = robotRender?.width() ?: return null

@@ -1,6 +1,7 @@
 package com.wowbot.game.screen.battle
 
 import com.wowbot.game.championship.ChampionshipManager
+import com.wowbot.game.collision.CollisionManager
 import com.wowbot.game.screen.battle.render.BattleBackgroundRender
 import com.wowbot.game.screen.battle.render.BattleInformationRender
 import com.wowbot.game.engine.EngineContext
@@ -38,6 +39,8 @@ class BattleScreen(
         arenaBackground.render(context)
         arenaInformation.render(context)
 
+        CollisionManager.detect()
+
         nextIfNeeded(delta)
 
         val robotAContext = robots.first.context()
@@ -72,6 +75,9 @@ class BattleScreen(
 
     private fun nextIfNeeded(delta: Float) {
         if (robots.first.life <= 0 || robots.second.life <= 0) {
+
+            robots.first.stop = true
+            robots.second.stop = true
 
             endGameElapsedTime += delta
 

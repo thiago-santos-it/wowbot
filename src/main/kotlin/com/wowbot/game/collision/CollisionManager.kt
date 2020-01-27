@@ -9,6 +9,25 @@ object CollisionManager {
     }
 
     fun detect() {
-        //TODO
+        val listeners = listeners.toTypedArray()
+        var start = 0
+        while (listeners.size - start > 1) {
+            val objectA = listeners[start]
+
+            for (index in start until listeners.size) {
+                if (index != start) {
+                    val objectB = listeners[index]
+                    val objectACenter = objectA.center()
+                    val objectBCenter = objectB.center()
+                    if (objectACenter != null && objectBCenter != null &&
+                            (objectB.rectangle()?.contains(objectA.center()) == true ||
+                            objectA.rectangle()?.contains(objectB.center()) == true)) {
+                        objectA.collide()
+                        objectB.collide()
+                    }
+                }
+            }
+            start++
+        }
     }
 }

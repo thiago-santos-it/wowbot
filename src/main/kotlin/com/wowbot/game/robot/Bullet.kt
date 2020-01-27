@@ -17,10 +17,10 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
     var done = false
 
     private var elapsedSteps = 0
-    private val colliderSize = 10
+    private val colliderSize = 2
 
     private val bulletRender = BulletRender()
-    private val hiddenSteps = 3
+    private val hiddenSteps = 4
     private val stepsDuration = 60
     private val point = point
 
@@ -57,12 +57,22 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
     }
 
     override fun center(): Point? {
-       return Point(point.x + colliderSize / 2, point.y + colliderSize / 2)
+        return if (!done && elapsedSteps > hiddenSteps) {
+            Point(point.x + colliderSize / 2, point.y + colliderSize / 2)
+        } else {
+            null
+        }
     }
 
-    override fun rect(): Rectangle? {
-        return Rectangle(point.x , point.y, point.x + colliderSize, point.y + colliderSize)
+    override fun rectangle(): Rectangle? {
+        return if (!done && elapsedSteps > hiddenSteps) {
+            Rectangle(point.x, point.y, point.x + colliderSize, point.y + colliderSize)
+        } else {
+            null
+        }
     }
 
-    override fun collide() {}
+    override fun collide() {
+        done = true
+    }
 }
