@@ -1,4 +1,4 @@
-package com.wowbot.game.logic
+package com.wowbot.game.championship
 
 import com.wowbot.game.engine.AssetController
 import com.wowbot.game.robot.Robot

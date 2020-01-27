@@ -2,60 +2,93 @@ package com.wowbot.game.screen.raffle.render
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Align
-import com.wowbot.assets.layout.FontLayout
+import com.wowbot.assets.font.FontManager
 import com.wowbot.assets.layout.GridLayout
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
 import com.wowbot.game.robot.Robot
 
+
 class RaffleInformationRender(private val context: EngineContext,
                               private val battles: List<Pair<Robot, Robot>>): GameObject {
+    private val paddingTop = 4
+    private val chunkSize = (battles.size / 2) + 1
+    private val gridLayout = GridLayout((chunkSize * 3) + paddingTop, 100)
+    private val chunks = battles.chunked(chunkSize)
 
     private val colors = arrayListOf<Color>(Color.GREEN, Color.CORAL,
-            Color.FIREBRICK, Color.GOLD, Color.CYAN, Color.LIME, Color.BLUE)
+            Color.FIREBRICK, Color.GOLD, Color.CYAN, Color.LIME)
 
     override fun render(context: EngineContext) {
-        //TODO avoid text sobreposition with huge number of robots. (1) create more columns and adapt font size
-        val paddingTop = 4
-        val chunkSize = (battles.size / 2) + 1
-        val gridLayout = GridLayout(context, (chunkSize * 3) + paddingTop, 100)
-        val chunks = battles.chunked(chunkSize)
 
-        drawChunk(chunks[0], gridLayout, 98, paddingTop)
+        val fontManager = context.fontManager
+
+        drawChunk(chunks[0],2, paddingTop)
         if (chunks.size == 2) {
-            drawChunk(chunks[1], gridLayout, 48, paddingTop)
+            drawChunk(chunks[1],52, paddingTop)
         }
 
-        val mainText = "Battles"
-        val mainTextPaddingTop = 20
-        val mainFont = context.fontManager.font(FontLayout().size(1), Color.BLUE)
-        mainFont.draw(context.batch, mainText, gridLayout.centerX,
-                gridLayout.height(0) - mainTextPaddingTop, 0f, Align.center, false)
-
+        drawTitle(fontManager, context)
     }
 
-    private fun drawChunk(chunk: List<Pair<Robot, Robot>>, gridLayout: GridLayout, col: Int, paddingTop: Int) {
+    private fun drawTitle(fontManager: FontManager, context: EngineContext) {
+        val title = "Battles"
+        val font = fontManager.font(fontManager.size(1), Color.BLUE)
+        font.draw(context.batch, title, gridLayout.screenCenter.x.toFloat(),
+                gridLayout.y(0, 20), 0f, Align.center, false)
+    }
+
+    private fun drawChunk(chunk: List<Pair<Robot, Robot>>, col: Int, paddingTop: Int) {
         var space = 0
-        val fontSize = FontLayout().size(4)
+        val defaultRowSize = 45
+        val fontManager = context.fontManager
 
         chunk.forEachIndexed { index, robots ->
+
             val color = colors[index % colors.size]
-            val font = context.fontManager.font(fontSize, color)
-            drawNickname(gridLayout, font, robots.first, paddingTop + (index * 2) - 1 + space, col)
-            drawNickname(gridLayout, font, robots.second, paddingTop + (index * 2) + space, col)
+            val scale = gridLayout.height / defaultRowSize
+            val fontSize = (fontManager.size(1) * scale).toInt()
+            val font = fontManager.font(fontSize, color)
+
+            val rowA = paddingTop + (index * 2) - 1 + space
+            val rowB = paddingTop + (index * 2) + space
+
+            drawLine(col, rowA, rowB)
+
+            drawNickname(font, robots.first, rowA, col)
+            drawNickname(font, robots.second, rowB, col)
             space ++
         }
     }
 
-    private fun drawNickname(gridLayout: GridLayout, font: BitmapFont, robot: Robot, row: Int, col: Int) {
+    private fun drawLine(col: Int, rowA: Int, rowB: Int) {
+        val shape = ShapeRenderer()
+        shape.color = Color.BLUE
+        val paddingLeft = 20f
+
+        context.batch.end()
+        shape.begin(ShapeRenderer.ShapeType.Filled)
+        shape.rectLine(
+                gridLayout.x(col) - paddingLeft,
+                gridLayout.y(rowA),
+                gridLayout.x(col) - paddingLeft,
+                gridLayout.y(rowB + 1), 10f)
+        shape.end()
+        context.batch.begin()
+    }
+
+    private fun drawNickname(font: BitmapFont, robot: Robot, row: Int, col: Int) {
         val nickname = robot.nickname
         font.draw(context.batch,
                 nickname,
-                gridLayout.width(col),
-                gridLayout.height(row),
+                gridLayout.x(col),
+                gridLayout.y(row),
                 0f,
                 Align.left,
                 false)
     }
+
+    override fun dispose() {}
 }

@@ -10,6 +10,8 @@ import com.wowbot.game.engine.AssetController
 
 class FontManager: AssetController {
 
+    private val headers = arrayListOf(60, 50, 40, 30, 20, 10, 5)
+
     private val cache = mutableMapOf<String, BitmapFont>()
     private lateinit var fontFile: String
 
@@ -38,6 +40,10 @@ class FontManager: AssetController {
             cache[key] = font
             return font
         }
+    }
+
+    fun size(h: Int): Int {
+        return headers[h - 1]
     }
 
     override fun load() {}

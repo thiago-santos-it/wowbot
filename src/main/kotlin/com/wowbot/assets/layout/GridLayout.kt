@@ -1,20 +1,23 @@
 package com.wowbot.assets.layout
 
-import com.wowbot.game.engine.EngineContext
+import com.badlogic.gdx.Gdx
+import java.awt.Point
 
-class GridLayout(private val context: EngineContext, rows: Int, col: Int) {
+class GridLayout(rows: Int, col: Int) {
 
-    val rowSize = context.screenHeight / rows
-    val colSize = context.screenWidth / col
+    private val screenWidth = Gdx.graphics.width.toFloat()
+    private val screenHeight = Gdx.graphics.height.toFloat()
 
-    val centerX = context.screenWidth / 2
-    val centerY = context.screenHeight / 2
+    val height = screenHeight / rows
+    val width = screenWidth / col
 
-    fun width(col: Int): Float {
-        return context.screenWidth - col * colSize
+    val screenCenter = Point((screenWidth / 2f).toInt(), (screenHeight / 2f).toInt())
+
+    fun x(col: Int, padding: Int = 0): Float {
+        return col * width + padding
     }
 
-    fun height(row: Int): Float {
-        return context.screenHeight - row * rowSize
+    fun y(row: Int, padding: Int = 0): Float {
+        return screenHeight - (row * height + padding)
     }
 }

@@ -1,6 +1,7 @@
-package com.wowbot.game.logic
+package com.wowbot.game.screen
 
 import com.badlogic.gdx.Game
+import com.wowbot.game.championship.ChampionshipManager
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.screen.battle.BattleScreen
 import com.wowbot.game.screen.raffle.RaffleScreen

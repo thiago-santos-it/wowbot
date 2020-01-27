@@ -1,7 +1,7 @@
 package com.wowbot.game.screen.raffle
 
 import com.wowbot.game.engine.EngineContext
-import com.wowbot.game.engine.RenderScreen
+import com.wowbot.game.engine.ui.RenderScreen
 import com.wowbot.game.robot.Robot
 import com.wowbot.game.screen.raffle.render.RaffleInformationRender
 

@@ -1,6 +1,6 @@
-- Collide
-- Battle Context
 - Bullet animation
+
+- Collide
 - Destruction animation
+- Battle Context & Script improvements
 - Sound effects
-- Progress bar

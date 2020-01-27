@@ -1,4 +1,4 @@
-package com.wowbot.game.engine
+package com.wowbot.game.engine.ui
 
 import com.badlogic.gdx.Screen
 

@@ -12,6 +12,7 @@ fun main(args: Array<String>) {
       config.title = "Wowbot Arena"
       config.width = 0
       config.height = 0
+      config.resizable = false
       config.useGL30 = false
 
       if (args.isEmpty()) {
