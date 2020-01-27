@@ -9,6 +9,7 @@ import com.wowbot.game.script.Script
 import org.lwjgl.util.Point
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.random.Random
 
 class Robot(private val script: Script): GameObject {
 
@@ -28,8 +29,9 @@ class Robot(private val script: Script): GameObject {
     private var robotRender: RobotRender? = null
     private var currentAction: String? = null
 
-    private var point: Point = Point(400, 400)
+    private var point: Point? = null
     private var elapsedSteps: Float = 0f
+    private var typeA: Boolean = false
 
     private val stepSize = 10
     private val actionStepsDuration = 10f
@@ -41,13 +43,17 @@ class Robot(private val script: Script): GameObject {
     private val battleContext = BattleContext(false)
 
     fun load(typeA: Boolean) {
-        robotRender = RobotRender(typeA)
+
+        this.typeA = typeA
+
+        robotRender = RobotRender(nickname, typeA)
         cannon = Cannon(typeA)
         cannon?.load()
         robotRender?.load()
     }
 
     override fun render(context: EngineContext) {
+        randomPositionIfNeeded(context)
 
         robotRender?.point = this.point
         robotRender?.render(context)
@@ -64,14 +70,22 @@ class Robot(private val script: Script): GameObject {
         performAction(currentAction)
     }
 
+    private fun randomPositionIfNeeded(context: EngineContext) {
+        if (this.point == null && this.robotRender != null) {
+            val x = (context.screenWidth - 10 - (robotRender?.width() ?: 0)).toInt()
+            val y = Random.nextInt(robotRender?.height() ?: 0, (context.screenHeight - (robotRender?.height() ?: 0)).toInt())
+            this.point = Point(if (typeA) { 10 } else { x }, y)
+        }
+    }
+
     private fun performAction(action: String?) {
         if (action == null) { return }
         try {
             when (Action.valueOf(action)) {
-                Action.FORWARD -> forward()
-                Action.BACKWARD -> backward()
-                Action.LEFT -> rotateLeft()
-                Action.RIGHT -> rotateRight()
+                Action.FORWARD -> move(1)
+                Action.BACKWARD -> move(-1)
+                Action.LEFT -> robotRender?.rotateLeft()
+                Action.RIGHT -> robotRender?.rotateRight()
                 Action.CANNON_LEFT -> cannon?.rotateLeft()
                 Action.CANNON_RIGHT -> cannon?.rotateRight()
                 Action.FIRE -> cannon?.fire()
@@ -84,39 +98,23 @@ class Robot(private val script: Script): GameObject {
         }
     }
 
-    private fun forward() {
-        move(1)
-    }
-
-    private fun backward() {
-        move(-1)
-    }
-
-    private fun rotateLeft() {
-        robotRender?.rotateLeft()
-
-    }
-
-    private fun rotateRight() {
-        robotRender?.rotateRight()
-    }
-
     private fun move(direction: Int) {
+        val localPoint = point ?: return
         val angle = robotRender?.currentAngle() ?: 0f
         if (robotRender != null) {
 
             val x = stepSize * cos(angle.toRadians())
             val y = stepSize * sin(angle.toRadians())
 
-            val futurePoint = Point(this.point.x + direction * x.toInt(), this.point.y + direction * y.toInt())
+            val futurePoint = Point(localPoint.x + direction * x.toInt(), localPoint.y + direction * y.toInt())
 
             val width = Gdx.graphics.width - (robotRender?.width() ?: 0)
             val height = Gdx.graphics.height - (robotRender?.height() ?: 0)
 
             val hitTheWall = futurePoint.x > width || futurePoint.x < 0 || futurePoint.y < 0 || futurePoint.y > height
             if (!hitTheWall) {
-                this.point.x = futurePoint.x
-                this.point.y = futurePoint.y
+                localPoint.x = futurePoint.x
+                localPoint.y = futurePoint.y
             }
             battleContext.hitTheWall = !hitTheWall
         }

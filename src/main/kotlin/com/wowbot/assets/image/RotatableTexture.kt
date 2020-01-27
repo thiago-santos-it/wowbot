@@ -16,23 +16,36 @@ class RotatableTexture(val texture: Texture,
     private var angle: Float = initialAngle
     private val textureRegion = TextureRegion(texture, texture.width, texture.height)
 
+    fun width(): Int {
+        return textureRegion.regionWidth
+    }
+
+    fun height(): Int {
+        return textureRegion.regionHeight
+    }
+
     fun currentAngle(): Float {
         return angle
     }
 
     fun rotateRight() {
-        angle -= rotationStep
-        if (angle < 360) {
-            angle += 360
-        }
+        rotate(-rotationStep)
     }
 
     fun rotateLeft() {
-        angle += rotationStep
-        if (angle > 360) {
+        rotate(rotationStep)
+    }
+
+    private fun rotate(rotationAngle: Float) {
+        angle += rotationAngle
+        if (angle < 0) {
             angle += 360
         }
+        if (angle > 360) {
+            angle -= 360
+        }
     }
+
 
     fun draw(batch: SpriteBatch, point: Point) {
         batch.draw(textureRegion,

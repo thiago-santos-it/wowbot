@@ -1,4 +1,4 @@
-- Bullet animation
+- Bullet animation & sorteio de posição
 
 - Collide
 - Destruction animation

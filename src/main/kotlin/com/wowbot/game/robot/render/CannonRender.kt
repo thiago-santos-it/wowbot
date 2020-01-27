@@ -12,13 +12,13 @@ class CannonRender(private val typeA: Boolean): GameObject {
     private val textureManager = TextureManager()
     private var rotatableTexture: RotatableTexture? = null
 
-    var point: Point = Point(400, 400)
+    var point: Point? = null
 
     override fun load() {
         val texture = textureManager.texture(if (typeA) { StdTexture.TANK_CANNON_A } else { StdTexture.TANK_CANNON_B })
         val padding = 15
         val rotationStep = 10f
-        rotatableTexture = RotatableTexture(texture, rotationStep, Point(padding, padding),-padding.toFloat())
+        rotatableTexture = RotatableTexture(texture, rotationStep, Point(padding, padding),-padding.toFloat(), initialAngle = if (!typeA) { 180f } else { 0f })
     }
 
     fun rotateLeft() {
@@ -34,6 +34,7 @@ class CannonRender(private val typeA: Boolean): GameObject {
     }
 
     override fun render(context: EngineContext) {
-        rotatableTexture?.draw(context.batch, point)
+        val localPoint = point ?: return
+        rotatableTexture?.draw(context.batch, localPoint)
     }
 }

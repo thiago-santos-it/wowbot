@@ -28,7 +28,7 @@ var Action = {
 };
 
 function run(context) {
-    return Action.BACKWARD;
+    return Action.LEFT;
 }
 
-run(context);
+var action = run(context);

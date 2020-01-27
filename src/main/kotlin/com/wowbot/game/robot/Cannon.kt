@@ -10,7 +10,7 @@ class Cannon(private val typeA: Boolean): GameObject {
     private val bullets = mutableListOf<Bullet>()
     private var cannonRender: CannonRender? = null
 
-    var point: Point = Point(0, 0)
+    var point: Point? = null
 
     override fun load() {
         cannonRender = CannonRender(typeA)

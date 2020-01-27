@@ -28,9 +28,9 @@ enum class Action {
 }
 
 fun run(context: Map<String, Any>): Action {
-    return Action.FORWARD
+    return Action.RIGHT
 }
 
 if (memory.containsKey("context")) {
-    run(memory["context"] as Map<String, Any>).toString()
+    memory["action"] = run(memory["context"] as Map<String, Any>).toString()
 }

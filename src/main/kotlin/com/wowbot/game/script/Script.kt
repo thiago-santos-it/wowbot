@@ -20,7 +20,7 @@ class Script(private val compiledScript: CompiledScript, private val scriptConte
 
             scriptContext.setAttribute("context", runContext, ScriptContext.ENGINE_SCOPE)
             compiledScript.eval(scriptContext) as? String
-
+            scriptContext.getAttribute("action") as? String
         } catch(e: Exception) {
             println("Operation ignored!!!")
             e.printStackTrace()
