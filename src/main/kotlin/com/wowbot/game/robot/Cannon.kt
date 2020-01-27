@@ -7,6 +7,7 @@ import org.lwjgl.util.Point
 
 class Cannon(private val typeA: Boolean): GameObject {
 
+    private val amountOfBullets = 5
     private val bullets = mutableListOf<Bullet>()
     private var cannonRender: CannonRender? = null
 
@@ -26,13 +27,19 @@ class Cannon(private val typeA: Boolean): GameObject {
     }
 
     fun fire(force: Int = 1) {
-        if (bullets.size < Bullet.max) {
-            bullets.add(Bullet(cannonRender?.currentAngle() ?: 0f, force))
+        val padding = 15
+        val localPoint = point ?: return
+        val clonedPoint = Point(
+                localPoint.x + (cannonRender?.width() ?: 0) / 2 + padding ,
+                localPoint.y + (cannonRender?.height() ?: 0) / 2 + padding)
+
+        if (bullets.size < amountOfBullets) {
+            bullets.add(Bullet(clonedPoint, cannonRender?.currentAngle() ?: 0f, force))
         }
     }
 
     fun fireWithForce() {
-        fire(3)
+        fire(2)
     }
 
     override fun render(context: EngineContext) {

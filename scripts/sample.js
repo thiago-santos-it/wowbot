@@ -28,7 +28,7 @@ var Action = {
 };
 
 function run(context) {
-    return Action.LEFT;
+    return Action.FIRE;
 }
 
 var action = run(context);

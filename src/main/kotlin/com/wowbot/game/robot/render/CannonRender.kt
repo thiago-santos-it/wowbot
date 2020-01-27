@@ -21,6 +21,14 @@ class CannonRender(private val typeA: Boolean): GameObject {
         rotatableTexture = RotatableTexture(texture, rotationStep, Point(padding, padding),-padding.toFloat(), initialAngle = if (!typeA) { 180f } else { 0f })
     }
 
+    fun width(): Int? {
+        return rotatableTexture?.width()
+    }
+
+    fun height(): Int? {
+        return rotatableTexture?.height()
+    }
+
     fun rotateLeft() {
         rotatableTexture?.rotateLeft()
     }
