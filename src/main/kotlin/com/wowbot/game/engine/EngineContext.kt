@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.wowbot.assets.sound.SoundManager
 import com.wowbot.assets.font.FontManager
 import com.wowbot.assets.standard.StdFont
+import com.wowbot.game.collision.CollisionManager
 
 class EngineContext: AssetController {
 

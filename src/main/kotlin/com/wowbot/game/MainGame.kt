@@ -5,6 +5,7 @@ import com.wowbot.extensions.clearGL
 import com.wowbot.extensions.default
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.championship.ChampionshipManager
+import com.wowbot.game.collision.CollisionManager
 import com.wowbot.game.screen.SceneManager
 import com.wowbot.game.robot.Robot
 import com.wowbot.game.script.Script
@@ -27,6 +28,7 @@ class MainGame(private val scripts: List<Script>): Game() {
         clearGL()
         context.batch.begin()
         super.render()
+        CollisionManager.detect()
         context.batch.end()
     }
 

@@ -6,16 +6,19 @@ import com.wowbot.assets.standard.StdSound
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
 import com.wowbot.extensions.toRadians
+import com.wowbot.game.collision.CollisionListener
+import com.wowbot.game.collision.CollisionManager
 import com.wowbot.game.robot.context.BattleContext
 import com.wowbot.game.robot.context.RobotContext
 import com.wowbot.game.robot.render.RobotRender
 import com.wowbot.game.script.Script
 import org.lwjgl.util.Point
+import org.lwjgl.util.Rectangle
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-class Robot(private val script: Script): GameObject {
+class Robot(private val script: Script): GameObject, CollisionListener {
 
     enum class Action {
         FORWARD,
@@ -71,6 +74,8 @@ class Robot(private val script: Script): GameObject {
         cannon = Cannon(typeA)
         cannon?.load()
         robotRender?.load()
+
+        CollisionManager.register(this)
     }
 
     override fun render(context: EngineContext) {
@@ -132,7 +137,23 @@ class Robot(private val script: Script): GameObject {
         }
     }
 
-    fun collide() {
+    override fun center(): Point? {
+        val localPoint = point ?: return null
+        val localHeight = robotRender?.height() ?: return null
+        val localWidth = robotRender?.width() ?: return null
+
+        return Point(localPoint.x + localWidth / 2, localPoint.y + localHeight)
+    }
+
+    override fun rect(): Rectangle? {
+        val localPoint = point ?: return null
+        val localHeight = robotRender?.height() ?: return null
+        val localWidth = robotRender?.width() ?: return null
+
+        return Rectangle(localPoint.x, localPoint.y, localPoint.x + localWidth, localPoint.y + localHeight)
+    }
+
+    override fun collide() {
         collision = true
     }
 
