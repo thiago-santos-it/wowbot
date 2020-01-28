@@ -38,6 +38,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
     private var elapsedSteps: Float = 0f
     private var typeA: Boolean = false
 
+    private val runScriptLimitInMillis = 200
     private val hitDamage = 10
     private val stepSize = 10
     private val actionStepsDuration = 10f
@@ -99,10 +100,15 @@ class Robot(private val script: Script): GameObject, CollisionListener {
         if (!stop && elapsedSteps > actionStepsDuration) {
             elapsedSteps = 0f
             try {
+                val time = System.currentTimeMillis()
                 currentAction = Action.valueOf(script.run(scriptParameters) ?: "")
                 life -= currentAction?.damage ?: 0f
+
+                if (System.currentTimeMillis() - time > runScriptLimitInMillis) {
+                    life -= hitDamage
+                }
             } catch (e: Exception) {
-                print("Invalid action")
+                println("Invalid action")
                 life -= 10
             }
         }
