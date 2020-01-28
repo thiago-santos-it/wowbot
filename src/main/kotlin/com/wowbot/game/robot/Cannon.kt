@@ -5,7 +5,7 @@ import com.wowbot.game.engine.GameObject
 import com.wowbot.game.robot.render.CannonRender
 import org.lwjgl.util.Point
 
-class Cannon(private val typeA: Boolean): GameObject {
+class Cannon(private val typeA: Boolean, private val collisionGroup: String): GameObject {
 
     private var cannonRender: CannonRender? = null
 
@@ -35,7 +35,7 @@ class Cannon(private val typeA: Boolean): GameObject {
                 localPoint.y + (cannonRender?.height() ?: 0) / 2 + padding)
 
         if (bullets.size < amountOfBullets) {
-            bullets.add(Bullet(clonedPoint, cannonRender?.currentAngle() ?: 0f, force))
+            bullets.add(Bullet(clonedPoint, cannonRender?.currentAngle() ?: 0f, force, collisionGroup))
         }
     }
 

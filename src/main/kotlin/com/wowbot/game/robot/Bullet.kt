@@ -12,7 +12,10 @@ import org.lwjgl.util.Rectangle
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Bullet(point: Point, private val angle: Float, private val speedMultiplier: Int): GameObject, CollisionListener {
+class Bullet(point: Point,
+             private val angle: Float,
+             private val speedMultiplier: Int,
+             private val collisionGroup: String): GameObject, CollisionListener {
 
     var done = false
 
@@ -39,7 +42,7 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
         }
 
         if (elapsedSteps > stepsDuration) {
-            done = true
+            die()
         } else {
             move()
             bulletRender.point = point
@@ -72,7 +75,16 @@ class Bullet(point: Point, private val angle: Float, private val speedMultiplier
         }
     }
 
+    override fun group(): String {
+        return collisionGroup
+    }
+
     override fun collide() {
+        die()
+    }
+
+    private fun die() {
         done = true
+        CollisionManager.unregister(this)
     }
 }

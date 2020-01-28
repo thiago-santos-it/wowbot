@@ -12,4 +12,5 @@ interface CollisionListener {
 
     fun collide()
 
+    fun group(): String
 }

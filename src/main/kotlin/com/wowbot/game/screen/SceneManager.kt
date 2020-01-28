@@ -3,6 +3,7 @@ package com.wowbot.game.screen
 import com.badlogic.gdx.Game
 import com.wowbot.game.championship.ChampionshipManager
 import com.wowbot.game.engine.EngineContext
+import com.wowbot.game.engine.GameObject
 import com.wowbot.game.screen.battle.BattleScreen
 import com.wowbot.game.screen.raffle.RaffleScreen
 import com.wowbot.game.screen.winner.WinnerScreen
@@ -18,6 +19,8 @@ class SceneManager(
 
     private fun nextScreen() {
         val robots = championshipManager.next()
+
+        (game.screen as? GameObject)?.dispose()
 
         if (robots == null) {
 

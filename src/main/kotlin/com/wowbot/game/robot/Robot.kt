@@ -12,6 +12,7 @@ import com.wowbot.game.robot.render.RobotRender
 import com.wowbot.game.script.Script
 import org.lwjgl.util.Point
 import org.lwjgl.util.Rectangle
+import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
@@ -40,6 +41,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
     private val hitDamage = 10
     private val stepSize = 10
     private val actionStepsDuration = 10f
+    private val collisionGroup = UUID.randomUUID().toString()
 
     var stop = false
     var hitTheWall = false
@@ -70,11 +72,15 @@ class Robot(private val script: Script): GameObject, CollisionListener {
         this.typeA = typeA
 
         robotRender = RobotRender(nickname, typeA)
-        cannon = Cannon(typeA)
+        cannon = Cannon(typeA, collisionGroup)
         cannon?.load()
         robotRender?.load()
 
         CollisionManager.register(this)
+    }
+
+    override fun dispose() {
+        CollisionManager.unregister(this)
     }
 
     override fun render(context: EngineContext) {
@@ -150,6 +156,18 @@ class Robot(private val script: Script): GameObject, CollisionListener {
 
     override fun collide() {
         collision = true
+        //Rollback
+        when (currentAction) {
+            Action.FORWARD -> move(-1)
+            Action.BACKWARD -> move(1)
+            Action.LEFT -> robotRender?.rotateRight()
+            Action.RIGHT -> robotRender?.rotateLeft()
+            else -> {}
+        }
+    }
+
+    override fun group(): String {
+        return collisionGroup
     }
 
     private fun move(direction: Int) {
