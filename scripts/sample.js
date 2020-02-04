@@ -30,6 +30,12 @@ var Action = {
 };
 
 function run(context) {
+    // print("Action: " + context);
+    if (opponentDistance > 400) return Action.FORWARD;
+    if (opponentDown && opponentLeft && cannonAngle == 180.0) return Action.CANNON_LEFT;
+    if (opponentUp && opponentLeft && cannonAngle == 180.0) return Action.CANNON_RIGHT;
+    if (opponentDown && opponentRight && cannonAngle == 0.0) return Action.CANNON_RIGHT;
+    if (opponentUp && opponentRight && cannonAngle == 0.0) return Action.CANNON_LEFT;
     return Action.FIRE_HARD;
 }
 
