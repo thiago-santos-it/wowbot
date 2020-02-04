@@ -17,7 +17,7 @@ class CannonRender(private val typeA: Boolean): GameObject {
     override fun load() {
         val texture = textureManager.texture(if (typeA) { StdTexture.TANK_CANNON_A } else { StdTexture.TANK_CANNON_B })
         val padding = 15
-        val rotationStep = 10f
+        val rotationStep = 5f
         rotatableTexture = RotatableTexture(texture, rotationStep, Point(padding, padding),-padding.toFloat(), initialAngle = if (!typeA) { 180f } else { 0f })
     }
 

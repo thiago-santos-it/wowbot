@@ -41,7 +41,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
     private val runScriptLimitInMillis = 200
     private val hitDamage = 10
     private val stepSize = 10
-    private val actionStepsDuration = 10f
+    private val actionStepsDuration = 5f
     private val collisionGroup = UUID.randomUUID().toString()
 
     var stop = false
