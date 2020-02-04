@@ -55,9 +55,9 @@ class BattleScreen(
 
     fun robotContextPatameters(robot: RobotContext, opponent: RobotContext): Map<String, Any> {
 
-        val opponentUp = robot.x < opponent.x
+        val opponentUp = robot.y < opponent.y
         val opponentDown = !opponentUp
-        val opponentLeft = robot.y > opponent.y
+        val opponentLeft = robot.x > opponent.x
         val opponentRight = !opponentLeft
         val opponentDistance = hypot((robot.x - opponent.x).toFloat(), (robot.y - opponent.y).toFloat())
 
