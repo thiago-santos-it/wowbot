@@ -10,7 +10,7 @@ class Cannon(private val typeA: Boolean, private val collisionGroup: String): Ga
     private var cannonRender: CannonRender? = null
 
     val bullets = mutableListOf<Bullet>()
-    val amountOfBullets = 5
+    val amountOfBullets = 1
 
     var point: Point? = null
 

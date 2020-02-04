@@ -6,11 +6,11 @@ import com.wowbot.game.robot.Robot
 class ChampionshipManager(private val robots: List<Robot>): AssetController {
 
     private val losers = mutableListOf<Robot>()
-    val winners = mutableListOf<Robot>()
+    val winners = mutableSetOf<Robot>()
     val battles = mutableListOf<Pair<Robot, Robot>>()
 
     override fun load() {
-        raffle(robots)
+        raffle(robots.toSet())
     }
 
     fun next(): Pair<Robot, Robot>? {
@@ -35,7 +35,7 @@ class ChampionshipManager(private val robots: List<Robot>): AssetController {
         losers.add(robot)
     }
 
-    private fun raffle(competitors: List<Robot>): List<Pair<Robot, Robot>> {
+    private fun raffle(competitors: Set<Robot>): List<Pair<Robot, Robot>> {
         val mutableCompetitors = mutableListOf<Robot>()
         mutableCompetitors.addAll(competitors)
 

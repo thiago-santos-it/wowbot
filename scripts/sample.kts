@@ -30,12 +30,12 @@ val opponentRight = context?.get("opponentRight") as? Boolean
 val opponentLeft = context?.get("opponentLeft") as? Boolean
 
 enum class Action {
-  FORWARD, BACKWARD, LEFT, RIGHT, CANNON_LEFT, CANNON_RIGHT, FIRE, FIRE_HARD
+  FORWARD, BACKWARD, LEFT, RIGHT, CANNON_LEFT, CANNON_RIGHT, FIRE, FIRE_HARD, NONE
 }
 
 fun run(context: Map<String, Any>): Action {
 
-    return Action.RIGHT
+    return Action.FORWARD
 }
 
 if (memory.containsKey("context")) {

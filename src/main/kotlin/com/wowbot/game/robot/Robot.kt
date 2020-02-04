@@ -20,14 +20,15 @@ import kotlin.random.Random
 class Robot(private val script: Script): GameObject, CollisionListener {
 
     enum class Action(val damage: Float) {
-        FORWARD(0.1f),
-        BACKWARD(0.1f),
-        LEFT(0.08f),
-        RIGHT(0.08f),
+        FORWARD(0.01f),
+        BACKWARD(0.01f),
+        LEFT(0.008f),
+        RIGHT(0.008f),
         CANNON_LEFT(0f),
         CANNON_RIGHT(0f),
-        FIRE(0.15f),
-        FIRE_HARD(0.3f)
+        FIRE(0.06f),
+        FIRE_HARD(0.07f),
+        NONE(0f)
     }
 
     private var cannon: Cannon? = null
@@ -41,7 +42,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
     private val runScriptLimitInMillis = 200
     private val hitDamage = 10
     private val stepSize = 10
-    private val actionStepsDuration = 5f
+    private val actionStepsDuration = 1f
     private val collisionGroup = UUID.randomUUID().toString()
 
     var stop = false
@@ -76,8 +77,18 @@ class Robot(private val script: Script): GameObject, CollisionListener {
         cannon = Cannon(typeA, collisionGroup)
         cannon?.load()
         robotRender?.load()
+        reset()
 
         CollisionManager.register(this)
+    }
+
+    fun reset() {
+        life = 100f
+        stop = false
+        hitTheWall = false
+        collision = false
+        died = false
+        point = null
     }
 
     override fun dispose() {
@@ -105,6 +116,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
                 life -= currentAction?.damage ?: 0f
 
                 if (System.currentTimeMillis() - time > runScriptLimitInMillis) {
+                    println("Timeout")
                     life -= hitDamage
                 }
             } catch (e: Exception) {
@@ -141,15 +153,8 @@ class Robot(private val script: Script): GameObject, CollisionListener {
             Action.CANNON_RIGHT -> cannon?.rotateRight()
             Action.FIRE -> cannon?.fire()
             Action.FIRE_HARD -> cannon?.fireHard()
+            Action.NONE -> {}
         }
-    }
-
-    override fun center(): Point? {
-        val localPoint = point ?: return null
-        val localHeight = robotRender?.height() ?: return null
-        val localWidth = robotRender?.width() ?: return null
-
-        return Point(localPoint.x + localWidth / 2, localPoint.y + localHeight)
     }
 
     override fun rectangle(): Rectangle? {
@@ -157,7 +162,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
         val localHeight = robotRender?.height() ?: return null
         val localWidth = robotRender?.width() ?: return null
 
-        return Rectangle(localPoint.x, localPoint.y, localPoint.x + localWidth, localPoint.y + localHeight)
+        return Rectangle(localPoint.x, localPoint.y, localWidth, localHeight)
     }
 
     override fun collide() {

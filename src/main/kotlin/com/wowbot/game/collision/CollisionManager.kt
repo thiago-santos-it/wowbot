@@ -14,33 +14,31 @@ object CollisionManager {
     }
 
     fun detect() {
-        val listenersArray = listeners.toTypedArray()
-        var start = 0
-        while (listenersArray.size - start > 1) {
-            val objectA = listenersArray[start]
+        var collide = false
+        //TODO: Improve!
+        listeners.forEach { objectA ->
+            if (!collide) {
 
-            for (index in start until listenersArray.size) {
+                listeners.forEach { objectB ->
 
-                val objectB = listenersArray[index]
+                    val center = objectA.center() ?: objectB.center()
+                    val rectangle = objectA.rectangle() ?: objectB.rectangle()
 
-                if (index != start && objectA.group() != objectB.group()) {
-
-                    val objectACenter = objectA.center()
-                    val objectBCenter = objectB.center()
-
-                    if (objectACenter != null && objectBCenter != null &&
-                            (objectB.rectangle()?.contains(objectA.center()) == true ||
-                            objectA.rectangle()?.contains(objectB.center()) == true)) {
-
+                    if (!collide && objectA.group() != objectB.group() && center != null && rectangle != null &&
+                            center.x > rectangle.x && center.x < (rectangle.x + rectangle.width) &&
+                            center.y > rectangle.y && center.y < (rectangle.y + rectangle.height)) {
                         objectA.collide()
                         objectB.collide()
+                        collide = true
                     }
                 }
             }
-            start++
         }
+
         if (removeList.isNotEmpty()) {
             listeners.removeAll(removeList)
+            removeList.clear()
         }
     }
 }
+//

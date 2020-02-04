@@ -10,6 +10,7 @@ import com.wowbot.assets.standard.StdTexture
 import com.wowbot.game.engine.EngineContext
 import com.wowbot.game.engine.GameObject
 import org.lwjgl.util.Point
+import org.lwjgl.util.Rectangle
 
 class RobotRender(private val nickname: String, private val typeA: Boolean): GameObject {
 

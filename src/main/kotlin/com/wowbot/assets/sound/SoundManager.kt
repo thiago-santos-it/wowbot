@@ -24,14 +24,14 @@ class SoundManager: AssetController {
     }
 
     fun play(file: String) {
-        assetManager.get<Sound>(file).play()
+        assetManager.get<Sound>(file).play(0.5f)
     }
 
     fun playMusic() {
         if (!playingMusic) {
             val music = assetManager.get<Music>(StdMusic.MUSIC.file)
             music.isLooping = true
-            music.volume = 1f
+            music.volume = 0f
             music.play()
             playingMusic = music.isPlaying
         }

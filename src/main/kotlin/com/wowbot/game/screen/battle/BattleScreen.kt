@@ -85,12 +85,10 @@ class BattleScreen(
 
                 if (robots.first.life <= 0) {
                     championshipManager.loser(robots.first)
+                    championshipManager.winner(robots.second)
+                } else if (robots.second.life <= 0) {
                     championshipManager.winner(robots.first)
-                }
-
-                if (robots.second.life <= 0) {
-                    championshipManager.winner(robots.first)
-                    championshipManager.loser(robots.first)
+                    championshipManager.loser(robots.second)
                 }
                 next()
             }

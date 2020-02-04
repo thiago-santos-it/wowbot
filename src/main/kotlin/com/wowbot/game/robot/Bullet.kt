@@ -20,7 +20,6 @@ class Bullet(point: Point,
     var done = false
 
     private var elapsedSteps = 0
-    private val colliderSize = 2
 
     private val bulletRender = BulletRender()
     private val hiddenSteps = 4
@@ -35,6 +34,7 @@ class Bullet(point: Point,
     }
 
     override fun render(context: EngineContext) {
+        if (done) { return }
 
         if (playSound) {
             context.soundManager.play(StdSound.FIRE)
@@ -60,16 +60,8 @@ class Bullet(point: Point,
     }
 
     override fun center(): Point? {
-        return if (!done && elapsedSteps > hiddenSteps) {
-            Point(point.x + colliderSize / 2, point.y + colliderSize / 2)
-        } else {
-            null
-        }
-    }
-
-    override fun rectangle(): Rectangle? {
-        return if (!done && elapsedSteps > hiddenSteps) {
-            Rectangle(point.x, point.y, point.x + colliderSize, point.y + colliderSize)
+        return if (elapsedSteps > hiddenSteps) {
+            return point
         } else {
             null
         }
