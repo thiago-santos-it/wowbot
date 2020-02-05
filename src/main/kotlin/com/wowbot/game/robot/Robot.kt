@@ -89,6 +89,7 @@ class Robot(private val script: Script): GameObject, CollisionListener {
         collision = false
         died = false
         point = null
+        script.start()
     }
 
     override fun dispose() {

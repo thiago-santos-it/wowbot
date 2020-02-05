@@ -65,6 +65,7 @@ class BattleScreen(
                 robotContext = robot,
                 fieldWidth = context.screenWidth,
                 fieldHeight = context.screenHeight,
+                opponentLife = opponent.life,
                 opponentUp = opponentUp,
                 opponentDown = opponentDown,
                 opponentLeft = opponentLeft,

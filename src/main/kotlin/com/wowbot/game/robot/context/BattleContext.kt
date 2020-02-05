@@ -4,6 +4,7 @@ data class BattleContext(
         var robotContext: RobotContext,
         var fieldWidth: Float,
         var fieldHeight: Float,
+        val opponentLife: Float,
         val opponentDistance: Float,
         val opponentUp: Boolean,
         val opponentDown: Boolean,
@@ -27,7 +28,8 @@ data class BattleContext(
                 "opponentUp" to opponentUp,
                 "opponentDown" to opponentDown,
                 "opponentRight" to opponentRight,
-                "opponentLeft" to opponentLeft
+                "opponentLeft" to opponentLeft,
+                "opponentLife" to opponentLife
         )
     }
 }
