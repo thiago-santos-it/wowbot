@@ -27,8 +27,8 @@ class Robot(private val script: Script): GameObject, CollisionListener {
         CANNON_LEFT(0f),
         CANNON_RIGHT(0f),
         FIRE(0.06f),
-        FIRE_HARD(0.07f),
-        NONE(0f)
+        FIRE_HARD(0.08f),
+        NONE(0.01f)
     }
 
     private var cannon: Cannon? = null
