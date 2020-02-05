@@ -6,8 +6,6 @@ import javax.script.SimpleScriptContext
 
 class Script(private val compiledScript: CompiledScript, private val scriptContext: ScriptContext = SimpleScriptContext()) {
 
-    private var memory: Any? = null
-
     init {
         scriptContext.setBindings(compiledScript.engine.createBindings(), ScriptContext.ENGINE_SCOPE)
     }
@@ -28,7 +26,6 @@ class Script(private val compiledScript: CompiledScript, private val scriptConte
             scriptContext.setAttribute("first_run", false, ScriptContext.ENGINE_SCOPE)
             scriptContext.setAttribute("context", runContext, ScriptContext.ENGINE_SCOPE)
             compiledScript.eval(scriptContext) as? String
-            memory = scriptContext.getAttribute("memory")
             scriptContext.getAttribute("action") as? String
         } catch(e: Exception) {
             println("Operation ignored!!!")
